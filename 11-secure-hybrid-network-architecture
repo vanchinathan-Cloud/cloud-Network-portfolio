@@ -1,3 +1,0 @@
-This project demonstrates the design and implementation of a secure, scalable hybrid network architecture connecting an on-premises data center to AWS.
-The architecture follows AWS best practices for security, high availability, and network segmentation using Transit Gateway, Site-to-Site VPN, and private VPC design.
-The goal is to enable secure private connectivity, centralized traffic control, and future scalability for multi-VPC environments.
