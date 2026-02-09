@@ -5,4 +5,4 @@ VPCs are isolated networks.
 Each region comes with a default VPC - can be deleted ( One default VPC per Region ).
 Each region can have multiple VPCs -Max 5 VPC's inculding default VPC (Soft limit) per region.
 It includes public and private subnets across multiple AZs, route tables, IGW/NAT design, and VPC Flow Logs.  
-The goal is to understand traffic flow, subnet isolation, and core AWS networking concepts used in real architectures.(refter the architeture-digaram)
+The goal is to understand traffic flow, subnet isolation, and core AWS networking concepts used in real architectures.(refter the sample architeture-digaram)
