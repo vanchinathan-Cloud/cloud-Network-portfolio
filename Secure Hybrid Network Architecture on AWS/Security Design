@@ -1,0 +1,21 @@
+Defense in Depth
+================
+Encrypted IPsec tunnels for hybrid connectivity
+
+TLS for application-level communication
+
+Security Groups (stateful, instance-level)
+
+Network ACLs (stateless, subnet-level)
+
+IAM least-privilege access
+
+Network Segmentation
+===================
+No direct VPC-to-VPC peering
+
+All traffic routed through Transit Gateway
+
+Separate route tables per VPC
+
+Shared services isolated from application workloads
