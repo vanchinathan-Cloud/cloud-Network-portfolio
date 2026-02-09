@@ -1,0 +1,19 @@
+ON-PREM -> AWS PRIVATE EC2
+==========================
+* Traffic leaves on-prem router
+
+* Encrypted via IPsec tunnel
+
+* Reaches AWS Transit Gateway
+
+* Routed to target VPC attachment
+
+* Delivered to private EC2 instance
+
+AWS -> INTERNET (OUTBOUND ONLY)
+===============================
+# Private EC2 sends traffic to NAT Gateway
+
+# NAT Gateway routes traffic via Internet Gateway
+
+# No inbound internet access to private subnets
