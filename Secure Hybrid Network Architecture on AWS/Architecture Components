@@ -1,0 +1,27 @@
+On-Premises
+==========
+Customer Gateway (Firewall / Router)
+
+Private IP range (example: 192.168.0.0/16)
+
+BGP enabled for dynamic routing
+
+AWS
+====
+Amazon VPC (10.0.0.0/16)
+
+Public and private subnets across multiple AZs
+
+AWS Transit Gateway (hub)
+
+Site-to-Site IPsec VPN (dual tunnels)
+
+NAT Gateway for outbound internet access
+
+Internet Gateway (public subnets only)
+
+Security Groups and Network ACLs
+
+IAM roles and policies
+
+VPC Flow Logs and CloudTrail
