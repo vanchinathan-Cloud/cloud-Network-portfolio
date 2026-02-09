@@ -2,14 +2,3 @@ This project demonstrates the design and implementation of a secure, scalable hy
 The architecture follows AWS best practices for security, high availability, and network segmentation using Transit Gateway, Site-to-Site VPN, and private VPC design.
 The goal is to enable secure private connectivity, centralized traffic control, and future scalability for multi-VPC environments.
 
-🎯 Objectives
-
-Securely connect on-premises infrastructure to AWS
-
-Centralize routing and control using AWS Transit Gateway
-
-Implement defense-in-depth network security
-
-Enable high availability and failover
-
-Provide visibility and monitoring for network traffic
