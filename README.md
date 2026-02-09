@@ -10,5 +10,5 @@ aws-cloud-portfolio/
 ├── 08-eks-networking-demo/
 ├── 09-cloudwatch-observability/
 ├── 10-cloudformation-terraform-examples/
-│
+├──11. secure-hybrid-network-architecture/
 └── README.md
