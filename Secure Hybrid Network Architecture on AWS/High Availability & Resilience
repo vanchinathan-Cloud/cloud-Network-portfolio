@@ -1,0 +1,9 @@
+Dual VPN tunnels (active/active)
+
+Multi-AZ subnets
+
+Highly available Transit Gateway
+
+NAT Gateway per AZ
+
+BGP-based failover for hybrid connectivity
