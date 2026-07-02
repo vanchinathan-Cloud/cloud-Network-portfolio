@@ -1,6 +1,6 @@
 03 – Multi-Tier App (ALB + ASG + RDS)
 
-Overview
+# Overview
 
 This module builds a classic three-tier web application architecture on AWS: a public-facing Application Load Balancer (ALB), an Auto Scaling Group (ASG) of EC2 instances running the app in private subnets, and a Multi-AZ RDS database in isolated database subnets.
 Each tier sits in its own layer of the VPC, with security groups enforcing that traffic only flows one tier to the next — never skipping a layer or reaching the database directly from the internet.
@@ -61,18 +61,18 @@ Terminate an app instance manually — confirm ASG replaces it and ALB stops rou
 Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then back in when load drops.
 
 # Lessons Learned
-Security group chaining, not CIDR-based rules — referencing alb-sg / app-sg as the source in the next tier's inbound rule (not a CIDR range) means it stays correct even as instances scale up/down or get new IPs.
-RDS must NOT be in public subnets, and "Publicly accessible" should be set to No — this is a common oversight that exposes the database directly to the internet.
-Don't bake DB credentials into the AMI or user data in plaintext —pull them from Secrets Manager (or Parameter Store) at boot using the instance's IAM role.
-Health check path matters — if the ALB health check hits a path that requires DB connectivity and RDS isn't ready yet at boot, instances can get marked unhealthy and cycle repeatedly; consider a lightweight /health endpoint that doesn't depend on the DB, or add sufficient ASG/ALB health check grace period.
-NAT Gateway cost — a NAT Gateway per AZ is best practice for HA but adds cost; a single shared NAT Gateway is common for lab/dev environments as a cost trade-off (call this out explicitly if you did it).
-Multi-AZ RDS failover isn't instant — expect ~60–120 seconds of downtime during failover; the app should have basic retry logic for DB connections rather than assuming an always-instant connection. 
-ASG scale-in can kill connections mid-request — enable connection draining / deregistration delay on the target group so in-flight requests finish before an instance is removed.
-Least-privilege IAM — the EC2 instance profile should only have the specific permissions it needs (e.g., secretsmanager:GetSecretValue on the one secret), not broad * access.
+1. Security group chaining, not CIDR-based rules — referencing alb-sg / app-sg as the source in the next tier's inbound rule (not a CIDR range) means it stays correct even as instances scale up/down or get new IPs.
+2. RDS must NOT be in public subnets, and "Publicly accessible" should be set to No — this is a common oversight that exposes the database directly to the internet.
+3. Don't bake DB credentials into the AMI or user data in plaintext —pull them from Secrets Manager (or Parameter Store) at boot using the instance's IAM role.
+4. Health check path matters — if the ALB health check hits a path that requires DB connectivity and RDS isn't ready yet at boot, instances can get marked unhealthy and cycle repeatedly; consider a lightweight /health endpoint that doesn't depend on the DB, or add sufficient ASG/ALB health check grace period.
+5. NAT Gateway cost — a NAT Gateway per AZ is best practice for HA but adds cost; a single shared NAT Gateway is common for lab/dev environments as a cost trade-off (call this out explicitly if you did it).
+6. Multi-AZ RDS failover isn't instant — expect ~60–120 seconds of downtime during failover; the app should have basic retry logic for DB connections rather than assuming an always-instant connection. 
+7. ASG scale-in can kill connections mid-request — enable connection draining / deregistration delay on the target group so in-flight requests finish before an instance is removed.
+8. Least-privilege IAM — the EC2 instance profile should only have the specific permissions it needs (e.g., secretsmanager:GetSecretValue on the one secret), not broad * access.
 
-# Validation / Testing Checklist
- ALB DNS name / custom domain serves the app over HTTPS 
- App instances have no public IP and are unreachable directly from the internet  
+# Validation / Testing Checklist:
+  ALB DNS name / custom domain serves the app over HTTPS
+ App instances have no public IP and are unreachable directly from the internet
  RDS "Publicly accessible" = No; unreachable outside the app SG
  Target group shows all instances Healthy
  Terminating an instance → ASG replaces it automatically
