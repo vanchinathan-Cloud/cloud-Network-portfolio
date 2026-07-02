@@ -5,28 +5,27 @@ Overview
 This module builds a classic three-tier web application architecture on AWS: a public-facing Application Load Balancer (ALB), an Auto Scaling Group (ASG) of EC2 instances running the app in private subnets, and a Multi-AZ RDS database in isolated database subnets.
 Each tier sits in its own layer of the VPC, with security groups enforcing that traffic only flows one tier to the next — never skipping a layer or reaching the database directly from the internet.
 
-Why This Pattern
-# Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
-# High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
-# Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
-# Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
+# Why This Pattern
+Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
+High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
+Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
+Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
 
 
-Core Components
+# Core Components
 
-ComponentPurpose
-# VPC with 3 subnet tiers: Public subnets (ALB, NAT Gateway), private app subnets (EC2/ASG), private DB subnets (RDS) — each tier duplicated across ≥2 AZs.
-# Internet Gateway (IGW): Gives the public subnets (and thus the ALB) internet reachability.
-# NAT Gatewa: yLets instances in private subnets reach the internet outbound (e.g., OS updates) without being reachable inbound.
-# Application Load Balancer (ALB): Public entry point; terminates HTTP/HTTPS, distributes traffic across healthy instances in the ASG, performs health checks.
-# Target Group: The set of instances the ALB routes to; defines the health check path/port.
-# Auto Scaling Group (ASG): Manages the fleet of EC2 app instances — launches/terminates based on a scaling policy, spread across AZs.
-# Launch Template: Defines what each ASG instance looks like — AMI, instance type, user data (bootstrap script), IAM instance profile, security group.
-# RDS (Multi-AZ): The database tier — a primary instance with a synchronously replicated standby in a second AZ for automatic failover.
-# DB Subnet Group: Tells RDS which (private, isolated) subnets it's allowed to launch into.
-# Security Groups (chained): ALB SG allows inbound 80/443 from 0.0.0.0/0. App SG allows inbound only from the ALB SG. DB SG allows inbound (e.g., 3306/5432) only from the App SG.
+VPC with 3 subnet tiers: Public subnets (ALB, NAT Gateway), private app subnets (EC2/ASG), private DB subnets (RDS) — each tier duplicated across ≥2 AZs.
+Internet Gateway (IGW): Gives the public subnets (and thus the ALB) internet reachability.
+NAT Gatewa: yLets instances in private subnets reach the internet outbound (e.g., OS updates) without being reachable inbound.
+Application Load Balancer (ALB): Public entry point; terminates HTTP/HTTPS, distributes traffic across healthy instances in the ASG, performs health checks.
+Target Group: The set of instances the ALB routes to; defines the health check path/port.
+Auto Scaling Group (ASG): Manages the fleet of EC2 app instances — launches/terminates based on a scaling policy, spread across AZs.
+Launch Template: Defines what each ASG instance looks like — AMI, instance type, user data (bootstrap script), IAM instance profile, security group.
+RDS (Multi-AZ): The database tier — a primary instance with a synchronously replicated standby in a second AZ for automatic failover.
+DB Subnet Group: Tells RDS which (private, isolated) subnets it's allowed to launch into.
+Security Groups (chained): ALB SG allows inbound 80/443 from 0.0.0.0/0. App SG allows inbound only from the ALB SG. DB SG allows inbound (e.g., 3306/5432) only from the App SG.
 
-Build Steps (typical order):
+# Build Steps (typical order):
 
 1. Design and build the VPC CIDR block, 3 subnet tiers × 2+ AZs (public, app/private, DB/private).
 Internet Gateway attached; NAT Gateway(s) in the public subnet(s) —one per AZ for HA, or one shared to save cost in non-prod.
@@ -57,11 +56,11 @@ Hit the ALB DNS name / custom domain — confirm the app responds and can read/w
 Confirm app instances are not individually reachable from the internet (no public IP, and app SG blocks direct access anyway).
 Confirm RDS is not publicly accessible.
 
-Failure testing:
+# Failure testing:
 Terminate an app instance manually — confirm ASG replaces it and ALB stops routing to it during the outage (health checks failing).
 Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then back in when load drops.
 
-Lessons Learned
+# Lessons Learned
 Security group chaining, not CIDR-based rules — referencing alb-sg / app-sg as the source in the next tier's inbound rule (not a CIDR range) means it stays correct even as instances scale up/down or get new IPs.
 RDS must NOT be in public subnets, and "Publicly accessible" should be set to No — this is a common oversight that exposes the database directly to the internet.
 Don't bake DB credentials into the AMI or user data in plaintext —pull them from Secrets Manager (or Parameter Store) at boot using the instance's IAM role.
@@ -71,9 +70,7 @@ Multi-AZ RDS failover isn't instant — expect ~60–120 seconds of downtime dur
 ASG scale-in can kill connections mid-request — enable connection draining / deregistration delay on the target group so in-flight requests finish before an instance is removed.
 Least-privilege IAM — the EC2 instance profile should only have the specific permissions it needs (e.g., secretsmanager:GetSecretValue on the one secret), not broad * access.
 
-
-Validation / Testing Checklist
-
+# Validation / Testing Checklist
  ALB DNS name / custom domain serves the app over HTTPS 
  App instances have no public IP and are unreachable directly from the internet  
  RDS "Publicly accessible" = No; unreachable outside the app SG
