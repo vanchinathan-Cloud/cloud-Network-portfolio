@@ -1,4 +1,4 @@
-03 – Multi-Tier App (ALB + ASG + RDS)
+# 03 – Multi-Tier App (ALB + ASG + RDS)
 
 # Overview
 
@@ -72,10 +72,10 @@ Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then 
 
 # Validation / Testing Checklist:
   ALB DNS name / custom domain serves the app over HTTPS
- App instances have no public IP and are unreachable directly from the internet
- RDS "Publicly accessible" = No; unreachable outside the app SG
- Target group shows all instances Healthy
- Terminating an instance → ASG replaces it automatically
- Scaling policy triggers scale-out under load and scale-in after
- RDS Multi-AZ failover test causes only a brief app interruption, then recovers
- Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
+  App instances have no public IP and are unreachable directly from the internet
+  RDS "Publicly accessible" = No; unreachable outside the app SG
+  Target group shows all instances Healthy
+  Terminating an instance → ASG replaces it automatically
+  Scaling policy triggers scale-out under load and scale-in after
+  RDS Multi-AZ failover test causes only a brief app interruption, then recovers
+  Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
