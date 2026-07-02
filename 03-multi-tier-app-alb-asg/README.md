@@ -57,8 +57,8 @@ Confirm app instances are not individually reachable from the internet (no publi
 Confirm RDS is not publicly accessible.
 
 # Failure testing:
-Terminate an app instance manually — confirm ASG replaces it and ALB stops routing to it during the outage (health checks failing).
-Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then back in when load drops.
+1. Terminate an app instance manually — confirm ASG replaces it and ALB stops routing to it during the outage (health checks failing).
+2. Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then back in when load drops.
 
 # Lessons Learned
 1. Security group chaining, not CIDR-based rules — referencing alb-sg / app-sg as the source in the next tier's inbound rule (not a CIDR range) means it stays correct even as instances scale up/down or get new IPs.
@@ -71,11 +71,11 @@ Trigger a scaling event (e.g., stress CPU) and confirm the ASG scales out, then 
 8. Least-privilege IAM — the EC2 instance profile should only have the specific permissions it needs (e.g., secretsmanager:GetSecretValue on the one secret), not broad * access.
 
 # Validation / Testing Checklist:
-  ALB DNS name / custom domain serves the app over HTTPS
-  App instances have no public IP and are unreachable directly from the internet
-  RDS "Publicly accessible" = No; unreachable outside the app SG
-  Target group shows all instances Healthy
-  Terminating an instance → ASG replaces it automatically
-  Scaling policy triggers scale-out under load and scale-in after
-  RDS Multi-AZ failover test causes only a brief app interruption, then recovers
-  Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
+1. ALB DNS name / custom domain serves the app over HTTPS
+2. App instances have no public IP and are unreachable directly from the internet
+3. RDS "Publicly accessible" = No; unreachable outside the app SG
+4. Target group shows all instances Healthy
+5. Terminating an instance → ASG replaces it automatically
+6. Scaling policy triggers scale-out under load and scale-in after
+7. RDS Multi-AZ failover test causes only a brief app interruption, then recovers
+8. Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
