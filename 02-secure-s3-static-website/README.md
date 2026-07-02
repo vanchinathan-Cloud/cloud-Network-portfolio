@@ -71,8 +71,6 @@ S3 REST origin errors aren't as friendly as the website endpoint's.
 - [ ] ACM certificate shows `Issued` and matches the domain
 - [ ] CloudFront distribution status = `Deployed`
 - [ ] Cache invalidation actually reflects updated content
-- [ ] (If WAF added) blocked test request actually gets blocked
+- [ ] (If WAF added) blocked test request actually gets blocked 
 
 
-distribution ID, domain, Terraform resource names, screenshots, and test
-results) before committing to the repo.*
