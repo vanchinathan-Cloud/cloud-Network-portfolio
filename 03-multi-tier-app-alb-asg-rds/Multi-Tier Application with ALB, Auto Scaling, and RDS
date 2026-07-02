@@ -1,0 +1,68 @@
+# 03 - Multi-Tier Application with ALB, Auto Scaling, and RDS
+
+
+Overview
+To design a secure, scalable, and fault-tolerant 3-tier architecture on AWS for hosting a Customer Contest web application .
+
+## Architecture
+1. Application Load Balancer (ALB) for routing traffic
+2. Amazon EC2 instances for compute
+3. RDS for the database tier
+
+
+## AWS Services Used
+
+- Amazon VPC
+- Public & Private Subnets
+- Internet Gateway
+- NAT Gateway
+- Route Tables
+- Security Groups
+- Application Load Balancer (ALB)
+- Target Group
+- Launch Template
+- Auto Scaling Group (ASG)
+- Amazon EC2
+- Amazon RDS (MySQL/PostgreSQL)
+
+## Features
+
+- High Availability across multiple Availability Zones
+- Automatic EC2 scaling based on demand
+- Secure database deployment in private subnets
+- Internet-facing Application Load Balancer
+- Network segmentation using public and private subnets
+
+## Deployment Steps
+
+1. Create a VPC.
+2. Configure public and private subnets.
+3. Attach an Internet Gateway.
+4. Create a NAT Gateway.
+5. Configure route tables.
+6. Create Security Groups.
+7. Launch an RDS instance in private subnets.
+8. Create a Launch Template.
+9. Create an Auto Scaling Group.
+10. Create an Application Load Balancer.
+11. Register EC2 instances with the Target Group.
+12. Test application accessibility through the ALB DNS name.
+
+
+## Learning Outcomes
+
+- Design a secure multi-tier AWS architecture.
+- Implement high availability and fault tolerance.
+- Configure Auto Scaling with ALB.
+- Deploy a managed relational database using Amazon RDS.
+- Apply AWS networking and security best practices(Secrets Manager & IAM Role and Permissions) .
+
+
+
+
+
+       
+
+
+
+               
