@@ -6,24 +6,24 @@ This module builds a classic three-tier web application architecture on AWS: a p
 Each tier sits in its own layer of the VPC, with security groups enforcing that traffic only flows one tier to the next — never skipping a layer or reaching the database directly from the internet.
 
 # Why This Pattern
-Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
-High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
-Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
-Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
+1.Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
+2. High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
+3. Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
+4. Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
 
 
 # Core Components
 
-VPC with 3 subnet tiers: Public subnets (ALB, NAT Gateway), private app subnets (EC2/ASG), private DB subnets (RDS) — each tier duplicated across ≥2 AZs.
-Internet Gateway (IGW): Gives the public subnets (and thus the ALB) internet reachability.
-NAT Gatewa: yLets instances in private subnets reach the internet outbound (e.g., OS updates) without being reachable inbound.
-Application Load Balancer (ALB): Public entry point; terminates HTTP/HTTPS, distributes traffic across healthy instances in the ASG, performs health checks.
-Target Group: The set of instances the ALB routes to; defines the health check path/port.
-Auto Scaling Group (ASG): Manages the fleet of EC2 app instances — launches/terminates based on a scaling policy, spread across AZs.
-Launch Template: Defines what each ASG instance looks like — AMI, instance type, user data (bootstrap script), IAM instance profile, security group.
-RDS (Multi-AZ): The database tier — a primary instance with a synchronously replicated standby in a second AZ for automatic failover.
-DB Subnet Group: Tells RDS which (private, isolated) subnets it's allowed to launch into.
-Security Groups (chained): ALB SG allows inbound 80/443 from 0.0.0.0/0. App SG allows inbound only from the ALB SG. DB SG allows inbound (e.g., 3306/5432) only from the App SG.
+1. VPC with 3 subnet tiers: Public subnets (ALB, NAT Gateway), private app subnets (EC2/ASG), private DB subnets (RDS) — each tier duplicated across ≥2 AZs.
+2. Internet Gateway (IGW): Gives the public subnets (and thus the ALB) internet reachability.
+3. NAT Gatewa: yLets instances in private subnets reach the internet outbound (e.g., OS updates) without being reachable inbound.
+4. Application Load Balancer (ALB): Public entry point; terminates HTTP/HTTPS, distributes traffic across healthy instances in the ASG, performs health checks.
+5. Target Group: The set of instances the ALB routes to; defines the health check path/port.
+6. Auto Scaling Group (ASG): Manages the fleet of EC2 app instances — launches/terminates based on a scaling policy, spread across AZs.
+7. Launch Template: Defines what each ASG instance looks like — AMI, instance type, user data (bootstrap script), IAM instance profile, security group.
+8. RDS (Multi-AZ): The database tier — a primary instance with a synchronously replicated standby in a second AZ for automatic failover.
+9. DB Subnet Group: Tells RDS which (private, isolated) subnets it's allowed to launch into.
+10. Security Groups (chained): ALB SG allows inbound 80/443 from 0.0.0.0/0. App SG allows inbound only from the ALB SG. DB SG allows inbound (e.g., 3306/5432) only from the App SG.
 
 # Build Steps (typical order):
 
