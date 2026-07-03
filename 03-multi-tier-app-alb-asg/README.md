@@ -6,10 +6,10 @@ This module builds a classic three-tier web application architecture on AWS: a p
 Each tier sits in its own layer of the VPC, with security groups enforcing that traffic only flows one tier to the next — never skipping a layer or reaching the database directly from the internet.
 
 # Why This Pattern
-1.Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
-2. High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
-3. Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
-4. Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
+1.  Scalability — the ASG adds/removes EC2 instances automatically based on load, instead of running a fixed, potentially oversized (or undersized) fleet.
+2.  High availability — resources are spread across multiple Availability Zones (AZs), so a single AZ failure doesn't take the app down.
+3.  Security by layering — only the ALB is internet-facing; app servers and database are never directly reachable from the public internet.
+4.  Decoupled tiers — web/app tier and database tier can be scaled,patched, and secured independently.
 
 
 # Core Components
