@@ -51,7 +51,7 @@ ALB in the public subnets, listener on 80 (redirect to 443) and 443 (with an ACM
 Attach the launch template, target the private app subnets (across AZs), attach it to the ALB's target group.
 Define min/max/desired capacity and a scaling policy (e.g.,target tracking on CPU utilization or ALB request count per target).
 
-7.Test end-to-end
+7. Test end-to-end
 Hit the ALB DNS name / custom domain — confirm the app responds and can read/write to RDS.
 Confirm app instances are not individually reachable from the internet (no public IP, and app SG blocks direct access anyway).
 Confirm RDS is not publicly accessible.
