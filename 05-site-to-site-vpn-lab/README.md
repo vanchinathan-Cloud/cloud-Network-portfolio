@@ -36,11 +36,11 @@ A Virtual Private Gateway and attach it to the target VPC, or Reference the exis
 Choose static routing (manually list on-prem CIDRs) or dynamic (BGP).
 AWS returns a configuration file with two tunnel endpoints, PSKs,and settings — download it (there's a template for many vendors,including generic/strongSwan).
 
-5.Configure the on-prem/simulator side
+5. Configure the on-prem/simulator side
 Apply the downloaded config to strongSwan/Libreswan (IKE version,PSK, encryption/DH settings, tunnel IPs).
 Bring the IPsec tunnel up and confirm Tunnel Status = UP in the AWS console.
 
-6.Enable route propagation / add static routes
+6. Enable route propagation / add static routes
 VGW path: enable route propagation on the VPC route table so AWS learns on-prem CIDRs automatically (if BGP), or add static routes.
 TGW path: propagate the VPN attachment's routes into the relevant TGW route table, same as any other spoke.
 
