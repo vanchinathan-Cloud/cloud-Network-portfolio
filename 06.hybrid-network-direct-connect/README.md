@@ -1,5 +1,5 @@
 
-# direct-connect-hybrid-network
+# Hybrid-Network-Direct-Connect
 
 # Overview
 
@@ -69,13 +69,13 @@ Note: physical connection ordering (steps 1–2) can't be done in a sandbox —m
 
 # Lessons Learned
 
-1.DX is not encrypted by default — if data must be encrypted in transit, layer IPsec VPN over the DX private VIF, or use MACsec (available on certain dedicated connection speeds) for link-layer encryption.
+1. DX is not encrypted by default — if data must be encrypted in transit, layer IPsec VPN over the DX private VIF, or use MACsec (available on certain dedicated connection speeds) for link-layer encryption.
 2. A private VIF only reaches one VPC unless you use a Direct Connect Gateway — a common mistake is expecting a private VIF alone to reach multiple VPCs.
 3. Allowed prefixes matter on Transit VIFs — if you forget to update theallowed prefix list on the DXGW-to-TGW association, new on-prem CIDRs won't be learned even if BGP has them.
 4. BGP ASN conflicts — using the same ASN on both ends (or an ASN already in use elsewhere in your network) breaks peering; plan your ASN allocation.
 5. Physical provisioning is slow — real DX orders can take days to weeks; always plan a VPN fallback if you have a hard deadline.
 6. Hosted vs. dedicated connections differ in who owns capacity management — hosted connections have fixed bandwidth set by the partner and can't be resized without re-ordering.
-7. Public VIFs need care — they can reach all AWS public IP ranges globally, which is powerful but also a broader attack surface if not paired with proper route filtering/BGP communities.
+7.  Public VIFs need care — they can reach all AWS public IP ranges globally, which is powerful but also a broader attack surface if not paired with proper route filtering/BGP communities.
 
 # Validation / Testing Checklist
 
