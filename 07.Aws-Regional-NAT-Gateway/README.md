@@ -34,7 +34,7 @@ Zonal NAT Gateway (traditional) | Regional NAT Gateway (new)
 4. VPC-level route entry: Private subnets need just one route (0.0.0.0/0 → the Regional NAT Gateway ID) — the same entry works for every AZ, unlike zonal NAT where each AZ needs its own route table.
 5. VPC IPAM Policy (optional): Lets you centrally define which IP pool (Amazon-provided or BYOIP) the Regional NAT Gateway draws its addresses from, useful at scale for partner IP allowlisting via managed prefix lists.
 
-# Build Steps (typical order)
+# Build Steps (typical order) Refer AWS_Regional NAT Gateway.docx
 
 1. Confirm VPC/subnet layout — private subnets across the AZs you want covered; no public subnets are required for the NAT Gateway itself (though you may still want one for other public-facing resources like an ALB).
    
