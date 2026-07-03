@@ -22,7 +22,7 @@ Gateway as another spoke — extending the hub-and-spoke topology to include on-
 2. VPN → Transit Gateway → multiple spoke VPCs Preferred when you already have a hub-and-spoke setup (like Module 04) —the VPN becomes just another TGW attachment, so on-prem gets the same routed access as any spoke, controlled through TGW route tables.
 
 
-# Build Steps (typical order)
+# Build Steps (typical order)  - Refer the attached document 
 
 1. Stand up the "on-prem" side Either a real on-prem simulator (EC2 + strongSwan) with its own public IP, or use AWS's own second VPC/CGW for practice.
 
