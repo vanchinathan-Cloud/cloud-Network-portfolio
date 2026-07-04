@@ -1,0 +1,52 @@
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="800" height="480" fill="#ffffff"/>
+
+  <!-- Internet -->
+  <rect x="330" y="15" width="140" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
+  <text x="400" y="40" text-anchor="middle" font-size="13" fill="#333333">Internet</text>
+  <line x1="400" y1="55" x2="400" y2="85" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- IGW -->
+  <rect x="310" y="85" width="180" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
+  <text x="400" y="110" text-anchor="middle" font-size="12" fill="#333333">Internet Gateway</text>
+
+  <!-- VPC container -->
+  <rect x="40" y="140" width="720" height="330" rx="16" fill="#FAFAFA" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="58" y="163" font-size="13" fill="#444444" font-weight="bold">VPC — no public subnet required</text>
+
+  <!-- Regional NAT Gateway (VPC-wide, not tied to a subnet) -->
+  <rect x="300" y="180" width="200" height="70" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
+  <text x="400" y="208" text-anchor="middle" font-size="13" fill="#5C1466" font-weight="bold">Regional NAT Gateway</text>
+  <text x="400" y="228" text-anchor="middle" font-size="11" fill="#5C1466">VPC-scoped, not AZ-bound</text>
+
+  <line x1="400" y1="125" x2="400" y2="180" stroke="#888888" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Private subnets AZ-a/b/c -->
+  <rect x="70" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="170" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-a</text>
+  <rect x="100" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="170" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
+
+  <rect x="300" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="400" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-b</text>
+  <rect x="330" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="400" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
+
+  <rect x="530" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="630" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-c</text>
+  <rect x="560" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="630" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
+
+  <!-- Single route from each subnet to the one Regional NAT GW -->
+  <line x1="170" y1="330" x2="360" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="400" y1="330" x2="400" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="630" y1="330" x2="440" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <text x="400" y="465" text-anchor="middle" font-size="10" fill="#777777">Same route (0.0.0.0/0 → Regional NAT GW) works across all AZs — auto-expands as new AZs are used</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+</svg>

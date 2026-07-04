@@ -27,6 +27,10 @@ Zonal NAT Gateway (traditional) | Regional NAT Gateway (new)
 7. Centralized egress via Transit Gateway: Fully supported (standard pattern) | Not currently supported â€” the Regional NAT Gateway's route table is AWS-managed and can't be customized to redirect return traffic through a TGW
 8. IP address control: Per-AZ EIP assignment (manual) | Automatic mode (AWS manages IPs/expansion, recommended) or Manual mode (you manage IPs and AZ coverage yourself)
 
+
+## Architecture Diagram
+![Architecture diagram](./architecture-diagram.svg)
+
 # Core Components
 
 1. NAT Gateway (Availability mode = Regional): The single, VPC-wide NAT resource â€” no subnet is specified at creation.

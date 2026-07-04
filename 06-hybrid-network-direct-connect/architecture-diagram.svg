@@ -1,0 +1,49 @@
+<svg width="800" height="380" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="800" height="380" fill="#ffffff"/>
+
+  <!-- On-prem datacenter -->
+  <rect x="30" y="110" width="190" height="110" rx="12" fill="#FBE9E7" stroke="#D84315" stroke-width="1"/>
+  <text x="125" y="138" text-anchor="middle" font-size="13" fill="#8C2A0F" font-weight="bold">On-Prem Datacenter</text>
+  <text x="125" y="158" text-anchor="middle" font-size="11" fill="#8C2A0F">CPE Router</text>
+  <text x="125" y="176" text-anchor="middle" font-size="10" fill="#8C2A0F">BGP ASN configured</text>
+  <text x="125" y="194" text-anchor="middle" font-size="10" fill="#8C2A0F">LOA-CFA / cross-connect</text>
+
+  <!-- Primary DX path -->
+  <line x1="220" y1="150" x2="290" y2="150" stroke="#D84315" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="255" y="140" text-anchor="middle" font-size="9" fill="#8C2A0F">dedicated fiber</text>
+
+  <!-- DX location -->
+  <rect x="290" y="110" width="170" height="90" rx="12" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="375" y="135" text-anchor="middle" font-size="12" fill="#8A4B00" font-weight="bold">DX Location</text>
+  <text x="375" y="153" text-anchor="middle" font-size="10" fill="#8A4B00">Virtual Interface (VIF)</text>
+  <text x="375" y="169" text-anchor="middle" font-size="10" fill="#8A4B00">VLAN ID + BGP peering</text>
+  <text x="375" y="185" text-anchor="middle" font-size="9" fill="#8A4B00">Private or Transit VIF</text>
+
+  <line x1="460" y1="150" x2="520" y2="150" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- DX Gateway -->
+  <rect x="520" y="110" width="140" height="90" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1"/>
+  <text x="590" y="135" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">Direct Connect</text>
+  <text x="590" y="152" text-anchor="middle" font-size="12" fill="#5C1466">Gateway</text>
+  <text x="590" y="170" text-anchor="middle" font-size="9" fill="#5C1466">allowed prefixes set</text>
+  <text x="590" y="185" text-anchor="middle" font-size="9" fill="#5C1466">BGP: Established</text>
+
+  <line x1="590" y1="200" x2="590" y2="240" stroke="#8E24AA" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- VGW/TGW + VPC -->
+  <rect x="510" y="240" width="160" height="50" rx="10" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="590" y="260" text-anchor="middle" font-size="11" fill="#3E6E2A">VGW / TGW</text>
+  <text x="590" y="276" text-anchor="middle" font-size="9" fill="#3E6E2A">→ VPC(s)</text>
+
+  <!-- Optional VPN backup path -->
+  <line x1="125" y1="220" x2="125" y2="300" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="125" y1="300" x2="590" y2="300" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="590" y1="300" x2="590" y2="290" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="360" y="315" text-anchor="middle" font-size="10" fill="#1F5C99">Optional: Site-to-Site VPN backup over internet (BGP local-pref: DX preferred)</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+</svg>

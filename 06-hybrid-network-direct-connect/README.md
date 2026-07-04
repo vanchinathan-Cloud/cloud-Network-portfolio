@@ -1,17 +1,17 @@
-
+﻿
 # Hybrid-Network-Direct-Connect
 
 # Overview
 
-This module covers AWS Direct Connect (DX) — a dedicated, private network connection from an on-premises location to AWS, bypassing the public internet entirely. Unlike Site-to-Site VPN (Module 05), which tunnels over the public internet, Direct Connect uses a physical fiber link into an AWS Direct Connect location (colocation facility),giving more consistent bandwidth, lower latency, and no internet exposure.
+This module covers AWS Direct Connect (DX) â€” a dedicated, private network connection from an on-premises location to AWS, bypassing the public internet entirely. Unlike Site-to-Site VPN (Module 05), which tunnels over the public internet, Direct Connect uses a physical fiber link into an AWS Direct Connect location (colocation facility),giving more consistent bandwidth, lower latency, and no internet exposure.
 
-In practice, most labs simulate this since real DX requires ordering a physical cross-connect from AWS or a partner — the important part is understanding the logical components and how DX integrates with VPCs, Direct Connect Gateway, and Transit Gateway.
+In practice, most labs simulate this since real DX requires ordering a physical cross-connect from AWS or a partner â€” the important part is understanding the logical components and how DX integrates with VPCs, Direct Connect Gateway, and Transit Gateway.
 
 # Direct Connect vs. Site-to-Site VPN
 
 Direct Connect | Site-to-Site VPN
 1. Path: Dedicated private fiber circuit | Encrypted tunnel over public internet
-2. Bandwidth: Consistent, dedicated (50 Mbps–100 Gbps) | Variable, internet-dependent
+2. Bandwidth: Consistent, dedicated (50 Mbpsâ€“100 Gbps) | Variable, internet-dependent
 3. Latency: Lower and more predictable | Depends on internet path
 4. Setup time: Days to weeks (physical provisioning) | Minutes
 5. Encryption: Not encrypted by default (can layer VPN over DX with MACsec/IPsec) | Encrypted (IPsec)
@@ -20,26 +20,30 @@ Direct Connect | Site-to-Site VPN
 
 Many real deployments run both: DX as primary, Site-to-Site VPN as automatic failover.
 
+
+## Architecture Diagram
+![Architecture diagram](./architecture-diagram.svg)
+
 # Core Components
 
 1. Direct Connect Location: Physical colocation facility where your router meets AWS's router.
 2. Connection: The physical port (dedicated 1/10/100 Gbps) or hosted connection (via an AWS Direct Connect Partner) at that location.
 3. Virtual Interface (VIF): A logical, VLAN-tagged interface over the physical connection.
 4. Three types: Private VIF (to a VPC via VGW/DXGW), Public VIF (to AWS public services/S3 without traversing internet), Transit VIF (to a Transit Gateway via DXGW).
-5. Direct Connect Gateway (DXGW): A global resource that lets one DX connection reach VPCs/TGWs across multiple regions and accounts — without it, a private VIF only reaches one VPC.
-6. BGP Session: DX uses BGP for dynamic routing — routes are exchanged automatically between your router and AWS's.
-7. LOA-CFA (Letter of Authorization – Connecting Facility Assignment)The document AWS issues authorizing the physical cross-connect at the DX location — needed for real (non-simulated) provisioning.
+5. Direct Connect Gateway (DXGW): A global resource that lets one DX connection reach VPCs/TGWs across multiple regions and accounts â€” without it, a private VIF only reaches one VPC.
+6. BGP Session: DX uses BGP for dynamic routing â€” routes are exchanged automatically between your router and AWS's.
+7. LOA-CFA (Letter of Authorization â€“ Connecting Facility Assignment)The document AWS issues authorizing the physical cross-connect at the DX location â€” needed for real (non-simulated) provisioning.
 
 # Two Ways to Attach to Your Network
 
-1. Private VIF → Virtual Private Gateway → single VPC Classic setup, same pattern as a VPN's VGW attachment.
-2. Transit VIF → Direct Connect Gateway → Transit Gateway → multiple spoke VPCs Preferred when building on the hub-and-spoke topology from Module 04 — DX becomes another TGW attachment, giving on-prem the same routed,segmented access as any spoke.
+1. Private VIF â†’ Virtual Private Gateway â†’ single VPC Classic setup, same pattern as a VPN's VGW attachment.
+2. Transit VIF â†’ Direct Connect Gateway â†’ Transit Gateway â†’ multiple spoke VPCs Preferred when building on the hub-and-spoke topology from Module 04 â€” DX becomes another TGW attachment, giving on-prem the same routed,segmented access as any spoke.
 
 # Build Steps (typical order)
 
-Note: physical connection ordering (steps 1–2) can't be done in a sandbox —most labs start from step 3 using a DX simulator/partner test environment,or just document the logical config.
+Note: physical connection ordering (steps 1â€“2) can't be done in a sandbox â€”most labs start from step 3 using a DX simulator/partner test environment,or just document the logical config.
 
-1. Request a Direct Connect connection — dedicated (order directly from AWS, get an LOA-CFA, get cross-connect installed) or hosted (order through an AWS Direct Connect Partner who already has a presence at the facility).
+1. Request a Direct Connect connection â€” dedicated (order directly from AWS, get an LOA-CFA, get cross-connect installed) or hosted (order through an AWS Direct Connect Partner who already has a presence at the facility).
    
 2. Confirm the connection is Available in the AWS console once physical wiring completes.
    
@@ -50,14 +54,14 @@ Note: physical connection ordering (steps 1–2) can't be done in a sandbox —m
    
 4. Create/associate a Direct Connect Gateway (if using DXGW path)
     Associate the DXGW with your VGW or Transit Gateway.
-   For TGW: also set allowed prefixes — the specific CIDRs DX is permitted to advertise into the TGW.
+   For TGW: also set allowed prefixes â€” the specific CIDRs DX is permitted to advertise into the TGW.
 
 5. Establish BGP peering
    Configure your on-prem/CPE router with the BGP details AWS provides.
    Confirm BGP session state = Established and routes are being exchanged in both directions.
 
 6. Update VPC / TGW route tables
-    Same as VPN/TGW modules — propagate the DX-learned routes into the right route table(s), and add routes in VPC subnets pointing at the VGW/TGW for on-prem CIDRs.
+    Same as VPN/TGW modules â€” propagate the DX-learned routes into the right route table(s), and add routes in VPC subnets pointing at the VGW/TGW for on-prem CIDRs.
 
 7. (Optional) Configure VPN as backup
     Set up a Site-to-Site VPN over the internet as a failover path; use BGP path prepending or local preference so DX is preferred when up.
@@ -69,13 +73,13 @@ Note: physical connection ordering (steps 1–2) can't be done in a sandbox —m
 
 # Lessons Learned
 
-1. DX is not encrypted by default — if data must be encrypted in transit, layer IPsec VPN over the DX private VIF, or use MACsec (available on certain dedicated connection speeds) for link-layer encryption.
-2. A private VIF only reaches one VPC unless you use a Direct Connect Gateway — a common mistake is expecting a private VIF alone to reach multiple VPCs.
-3. Allowed prefixes matter on Transit VIFs — if you forget to update theallowed prefix list on the DXGW-to-TGW association, new on-prem CIDRs won't be learned even if BGP has them.
-4. BGP ASN conflicts — using the same ASN on both ends (or an ASN already in use elsewhere in your network) breaks peering; plan your ASN allocation.
-5. Physical provisioning is slow — real DX orders can take days to weeks; always plan a VPN fallback if you have a hard deadline.
-6. Hosted vs. dedicated connections differ in who owns capacity management — hosted connections have fixed bandwidth set by the partner and can't be resized without re-ordering.
-7.  Public VIFs need care — they can reach all AWS public IP ranges globally, which is powerful but also a broader attack surface if not paired with proper route filtering/BGP communities.
+1. DX is not encrypted by default â€” if data must be encrypted in transit, layer IPsec VPN over the DX private VIF, or use MACsec (available on certain dedicated connection speeds) for link-layer encryption.
+2. A private VIF only reaches one VPC unless you use a Direct Connect Gateway â€” a common mistake is expecting a private VIF alone to reach multiple VPCs.
+3. Allowed prefixes matter on Transit VIFs â€” if you forget to update theallowed prefix list on the DXGW-to-TGW association, new on-prem CIDRs won't be learned even if BGP has them.
+4. BGP ASN conflicts â€” using the same ASN on both ends (or an ASN already in use elsewhere in your network) breaks peering; plan your ASN allocation.
+5. Physical provisioning is slow â€” real DX orders can take days to weeks; always plan a VPN fallback if you have a hard deadline.
+6. Hosted vs. dedicated connections differ in who owns capacity management â€” hosted connections have fixed bandwidth set by the partner and can't be resized without re-ordering.
+7.  Public VIFs need care â€” they can reach all AWS public IP ranges globally, which is powerful but also a broader attack surface if not paired with proper route filtering/BGP communities.
 
 # Validation / Testing Checklist
 

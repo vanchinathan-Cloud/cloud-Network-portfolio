@@ -1,0 +1,50 @@
+<svg width="800" height="380" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="800" height="380" fill="#ffffff"/>
+
+  <rect x="30" y="170" width="140" height="60" rx="10" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
+  <text x="100" y="205" text-anchor="middle" font-size="13" fill="#333333">User (browser)</text>
+
+  <line x1="170" y1="200" x2="230" y2="200" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="200" y="190" text-anchor="middle" font-size="10" fill="#555555">HTTPS</text>
+
+  <!-- Route 53 -->
+  <rect x="30" y="40" width="150" height="44" rx="10" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
+  <text x="105" y="67" text-anchor="middle" font-size="12" fill="#555555">Route 53 (Alias A record)</text>
+  <line x1="105" y1="84" x2="105" y2="170" stroke="#888888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="105" y1="170" x2="105" y2="200" stroke="#888888" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+
+  <!-- WAF (optional) -->
+  <rect x="230" y="130" width="140" height="44" rx="10" fill="#FBE9E7" stroke="#D84315" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="300" y="157" text-anchor="middle" font-size="11" fill="#8C2A0F">AWS WAF (optional)</text>
+
+  <!-- CloudFront -->
+  <rect x="230" y="180" width="220" height="100" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1"/>
+  <text x="340" y="210" text-anchor="middle" font-size="14" fill="#5C1466" font-weight="bold">CloudFront</text>
+  <text x="340" y="230" text-anchor="middle" font-size="11" fill="#5C1466">Origin Access Control (OAC)</text>
+  <text x="340" y="248" text-anchor="middle" font-size="11" fill="#5C1466">Redirect HTTP → HTTPS</text>
+  <text x="340" y="266" text-anchor="middle" font-size="11" fill="#5C1466">CF Function: path rewrite</text>
+
+  <!-- ACM -->
+  <rect x="230" y="30" width="220" height="44" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="340" y="57" text-anchor="middle" font-size="12" fill="#8A4B00">ACM Certificate (us-east-1)</text>
+  <line x1="340" y1="74" x2="340" y2="180" stroke="#FB8C00" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="345" y="120" font-size="9" fill="#8A4B00">attached to distribution</text>
+
+  <line x1="450" y1="230" x2="510" y2="230" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="480" y="220" text-anchor="middle" font-size="9" fill="#555555">signed request</text>
+
+  <!-- S3 -->
+  <rect x="510" y="180" width="200" height="100" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="610" y="210" text-anchor="middle" font-size="14" fill="#3E6E2A" font-weight="bold">S3 Bucket</text>
+  <text x="610" y="230" text-anchor="middle" font-size="11" fill="#3E6E2A">Block all public access: ON</text>
+  <text x="610" y="248" text-anchor="middle" font-size="11" fill="#3E6E2A">Static hosting: OFF (REST origin)</text>
+  <text x="610" y="266" text-anchor="middle" font-size="11" fill="#3E6E2A">Policy: allow OAC only</text>
+
+  <text x="610" y="320" text-anchor="middle" font-size="10" fill="#777777">Direct S3 URL access → 403 Access Denied</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+</svg>

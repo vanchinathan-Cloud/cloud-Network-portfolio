@@ -1,0 +1,55 @@
+<svg width="800" height="560" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="800" height="560" fill="#ffffff"/>
+
+  <rect x="330" y="15" width="140" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
+  <text x="400" y="40" text-anchor="middle" font-size="13" fill="#333333">Internet</text>
+  <line x1="400" y1="55" x2="400" y2="85" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="85" width="620" height="450" rx="16" fill="#FAFAFA" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="58" y="108" font-size="13" fill="#444444" font-weight="bold">VPC (3 tiers × 2 AZs)</text>
+
+  <!-- Public / ALB tier -->
+  <rect x="70" y="120" width="560" height="90" rx="12" fill="#DCEEFB" stroke="#4A90D9" stroke-width="1"/>
+  <text x="85" y="140" font-size="12" fill="#1F5C99" font-weight="bold">Public Subnets — alb-sg (80/443 from 0.0.0.0/0)</text>
+  <rect x="250" y="155" width="220" height="40" rx="8" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="360" y="180" text-anchor="middle" font-size="12" fill="#1F5C99">Application Load Balancer</text>
+  <text x="85" y="200" font-size="10" fill="#1F5C99">Target group health check: /health</text>
+
+  <line x1="360" y1="210" x2="360" y2="240" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- App tier -->
+  <rect x="70" y="240" width="560" height="110" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="85" y="260" font-size="12" fill="#3E6E2A" font-weight="bold">Private App Subnets — app-sg (app port from alb-sg only)</text>
+  <rect x="110" y="280" width="180" height="44" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="200" y="305" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2 — Auto Scaling AZ-a</text>
+  <rect x="410" y="280" width="180" height="44" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
+  <text x="500" y="305" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2 — Auto Scaling AZ-b</text>
+
+  <line x1="200" y1="324" x2="200" y2="370" stroke="#6FAE4B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="324" x2="500" y2="370" stroke="#6FAE4B" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- DB tier -->
+  <rect x="70" y="370" width="560" height="110" rx="12" fill="#EDE7F6" stroke="#7E57C2" stroke-width="1"/>
+  <text x="85" y="390" font-size="12" fill="#4A2E8F" font-weight="bold">DB Subnets — db-sg (db port from app-sg only)</text>
+  <rect x="110" y="410" width="180" height="44" rx="8" fill="#ffffff" stroke="#7E57C2" stroke-width="1"/>
+  <text x="200" y="437" text-anchor="middle" font-size="11" fill="#4A2E8F">RDS Primary (Multi-AZ)</text>
+  <rect x="410" y="410" width="180" height="44" rx="8" fill="#ffffff" stroke="#7E57C2" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="500" y="437" text-anchor="middle" font-size="11" fill="#4A2E8F">RDS Standby</text>
+  <line x1="290" y1="432" x2="410" y2="432" stroke="#7E57C2" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <!-- Secrets Manager (outside VPC, IAM-based access) -->
+  <rect x="700" y="280" width="90" height="60" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="745" y="305" text-anchor="middle" font-size="10" fill="#8A4B00">Secrets</text>
+  <text x="745" y="320" text-anchor="middle" font-size="10" fill="#8A4B00">Manager</text>
+
+  <line x1="590" y1="302" x2="700" y2="302" stroke="#FB8C00" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="600" y="292" font-size="9" fill="#8A4B00">reads DB creds via IAM role</text>
+
+  <text x="360" y="545" text-anchor="middle" font-size="10" fill="#777777">EC2 instances: no public IP · RDS: not publicly accessible</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+</svg>
