@@ -22,30 +22,24 @@ Gateway as another spoke — extending the hub-and-spoke topology to include on-
 2. VPN → Transit Gateway → multiple spoke VPCs Preferred when you already have a hub-and-spoke setup (like Module 04) —the VPN becomes just another TGW attachment, so on-prem gets the same routed access as any spoke, controlled through TGW route tables.
 
 
-# Build Steps (typical order)  - Refer the attached document 
+
+# Build Steps (typical order) 
 
 1. Stand up the "on-prem" side Either a real on-prem simulator (EC2 + strongSwan) with its own public IP, or use AWS's own second VPC/CGW for practice.
-
 2. Create a Customer Gateway (CGW) in AWS
 Provide the on-prem public IP and BGP ASN (if dynamic).
-
 3. Create the AWS-side termination point
 A Virtual Private Gateway and attach it to the target VPC, or Reference the existing Transit Gateway.
-
 4. Create the Site-to-Site VPN Connection
 Choose static routing (manually list on-prem CIDRs) or dynamic (BGP).
 AWS returns a configuration file with two tunnel endpoints, PSKs,and settings — download it (there's a template for many vendors,including generic/strongSwan).
-
 5. Configure the on-prem/simulator side
 Apply the downloaded config to strongSwan/Libreswan (IKE version,PSK, encryption/DH settings, tunnel IPs).
 Bring the IPsec tunnel up and confirm Tunnel Status = UP in the AWS console.
-
 6. Enable route propagation / add static routes
 VGW path: enable route propagation on the VPC route table so AWS learns on-prem CIDRs automatically (if BGP), or add static routes.
 TGW path: propagate the VPN attachment's routes into the relevant TGW route table, same as any other spoke.
-
 7. Update security groups / NACLs to allow the expected traffic (e.g., ICMP for testing, plus real app ports) between on-prem and AWS CIDR ranges.
-
 8. Test connectivity — ping/traceroute from an instance in the on-prem simulator to an instance in the AWS VPC, and vice versa.
 
 # Static vs. BGP (Dynamic) Routing
@@ -65,9 +59,10 @@ BGP routing: on-prem router peers via BGP over the tunnel and advertises/receive
 
 # Validation / Testing Checklist
 
- 1. Both VPN tunnels show UP in the AWS console
- 2. VPC/TGW route table shows the propagated on-prem CIDR
- 3. Instance in AWS can ping instance in on-prem simulator
- 4. Instance in on-prem simulator can ping instance in AWS
- 5. Traffic actually traverses the tunnel (check VPNTunnel CloudWatch metrics — TunnelState, TunnelDataIn/TunnelDataOut)
- 6.  Failover test: bring down Tunnel 1, confirm Tunnel 2 keeps traffic flowing
+1. Both VPN tunnels show UP in the AWS console
+2. VPC/TGW route table shows the propagated on-prem CIDR
+3. Instance in AWS can ping instance in on-prem simulator
+4. Instance in on-prem simulator can ping instance in AWS
+5. Traffic actually traverses the tunnel (check VPNTunnel CloudWatch metrics — TunnelState, TunnelDataIn/TunnelDataOut)
+6. Failover test: bring down Tunnel 1, confirm Tunnel 2 keeps traffic flowing
+
