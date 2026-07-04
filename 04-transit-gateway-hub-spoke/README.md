@@ -1,4 +1,4 @@
-# 04 transit-gateway-hub-spoke
+﻿# 04 transit-gateway-hub-spoke
 
  # Overview
 
@@ -8,9 +8,9 @@ inspection.
 
 # Why Transit Gateway over VPC Peering
 
-VPC Peering is not transitive â€” with N VPCs you'd need up to N(N-1)/2 peering connections. TGW turns this into N attachments (one per VPC).
-Centralized routing â€” one or more TGW route tables control who can talk to whom, instead of managing route tables per peering connection.
-Scales to on-prem and multi-region â€” TGW also accepts Direct Connect Gateway and Site-to-Site VPN attachments, and can be peered across regions.
+VPC Peering is not transitive Ã¢â‚¬â€ with N VPCs you'd need up to N(N-1)/2 peering connections. TGW turns this into N attachments (one per VPC).
+Centralized routing Ã¢â‚¬â€ one or more TGW route tables control who can talk to whom, instead of managing route tables per peering connection.
+Scales to on-prem and multi-region Ã¢â‚¬â€ TGW also accepts Direct Connect Gateway and Site-to-Site VPN attachments, and can be peered across regions.
 
 
 ## Architecture Diagram
@@ -25,33 +25,33 @@ Scales to on-prem and multi-region â€” TGW also accepts Direct Connect Gate
 5. Association vs. Propagation: Association = which route table an attachment uses to route ITS traffic. Propagation = which route table LEARNS routes FROM that attachment.
 
 # Build Steps (typical order)
-1. Create the VPCs â€” hub + spoke(s), each with non-overlapping CIDR blocks (critical â€” TGW does not do NAT/overlap resolution).
+1. Create the VPCs Ã¢â‚¬â€ hub + spoke(s), each with non-overlapping CIDR blocks (critical Ã¢â‚¬â€ TGW does not do NAT/overlap resolution).
 2. Create the Transit Gateway.
-3. Create TGW attachments â€” one per VPC, selecting a subnet in each AZ you want reachable.
-4. Create TGW route table(s) â€” e.g., rt-hub, rt-spoke â€” and set:
+3. Create TGW attachments Ã¢â‚¬â€ one per VPC, selecting a subnet in each AZ you want reachable.
+4. Create TGW route table(s) Ã¢â‚¬â€ e.g., rt-hub, rt-spoke Ã¢â‚¬â€ and set:
    Associations: which attachment uses which route table.
    Propagations: which attachments' CIDRs get auto-added as routes.
-5. Update VPC subnet route tables â€” add a route for the other VPCs'CIDRs (or 0.0.0.0/0 if routing all egress through the hub) with target the TGW.
-6. Security Groups / NACLs â€” TGW does not filter traffic itself (unless paired with AWS Network Firewall); enforce isolation at the VPC/instance layer too.
-7. Test connectivity â€” e.g., ping/curl between instances in different spokes, and confirm blocked paths actually fail (spoke-to-spoke if that's supposed to be denied).
+5. Update VPC subnet route tables Ã¢â‚¬â€ add a route for the other VPCs'CIDRs (or 0.0.0.0/0 if routing all egress through the hub) with target the TGW.
+6. Security Groups / NACLs Ã¢â‚¬â€ TGW does not filter traffic itself (unless paired with AWS Network Firewall); enforce isolation at the VPC/instance layer too.
+7. Test connectivity Ã¢â‚¬â€ e.g., ping/curl between instances in different spokes, and confirm blocked paths actually fail (spoke-to-spoke if that's supposed to be denied).
 
 # Route Table Segmentation Patterns
 1. Single TGW route table (flat/full-mesh): every spoke can reach every other spoke. Simple but least isolation.
 2. Hub-and-spoke isolation: spokes associate to a "spoke" route table that only propagates the hub's routes (not other spokes'). Spokes can reach the hub (and, through it, shared services or on-prem) but not each other.
-3. Segmented (e.g., prod isolated from dev/test): multiple route tables, selectively propagating only the CIDRs that should be reachable â€”useful for compliance boundaries.
+3. Segmented (e.g., prod isolated from dev/test): multiple route tables, selectively propagating only the CIDRs that should be reachable Ã¢â‚¬â€useful for compliance boundaries.
 
 # Lessons Learned
 1. CIDR ranges across all VPCs must not overlap.
-2. A VPC route table entry pointing at the TGW only takes effect for subnets actually listed in that route table â€” check every subnet that needs it.
+2. A VPC route table entry pointing at the TGW only takes effect for subnets actually listed in that route table Ã¢â‚¬â€ check every subnet that needs it.
 3. TGW attachments need a subnet in each AZ you want to route through, for HA; missing an AZ means instances there can't use the attachment.
-4. Remember both directions: spoke â†’ hub/other-spoke and the return route back, or you'll get asymmetric routing / blackholed traffic.
-5. Data transfer through TGW is billed per GB plus a per-attachment hourly charge â€” worth calling out in the cost section of the write-up.
+4. Remember both directions: spoke Ã¢â€ â€™ hub/other-spoke and the return route back, or you'll get asymmetric routing / blackholed traffic.
+5. Data transfer through TGW is billed per GB plus a per-attachment hourly charge Ã¢â‚¬â€ worth calling out in the cost section of the write-up.
 6. If you added a firewall/NVA in the hub VPC for inspection, you need an additional "inspection" TGW route table so traffic is routed through the appliance rather than directly hub-to-spoke.
 
 #  Validation / Testing Checklist
-1. Instance in Spoke A can reach instance in Spoke B (if allowed).
-2. Instance in Spoke A cannot reach Spoke C (if isolation intended).
-3. Spoke instances can reach shared services in the hub VPC.
-4. On-prem (VPN/DX) can reach permitted spoke CIDRs.
-5. Route tables show expected propagated routes (aws ec2     get-transit-gateway-route-table-propagations).
-6. No unintended 0.0.0.0/0 propagation exposing spokes to each other.
+- [ ] Instance in Spoke A can reach instance in Spoke B (if allowed).
+- [ ] Instance in Spoke A cannot reach Spoke C (if isolation intended).
+- [ ] Spoke instances can reach shared services in the hub VPC.
+- [ ] On-prem (VPN/DX) can reach permitted spoke CIDRs.
+- [ ] Route tables show expected propagated routes (aws ec2     get-transit-gateway-route-table-propagations).
+- [ ] No unintended 0.0.0.0/0 propagation exposing spokes to each other.

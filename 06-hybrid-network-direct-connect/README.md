@@ -83,9 +83,9 @@ Note: physical connection ordering (steps 1â€“2) can't be done in a sandbox
 
 # Validation / Testing Checklist
 
-1. Connection status = Available.
-2. VIF status = Available, BGP state = Established (aws directconnect describe-virtual-interfaces).
-3. Expected on-prem CIDRs appear in the VPC/TGW route table.
-4. Expected AWS CIDRs are being advertised to on-prem (check on-prem router's BGP table).
-5. Instance in AWS can reach on-prem resource, and vice versa.
-6. If VPN backup configured: disable DX path and confirm automatic failover to VPN, then confirm failback when DX is restored
+- [ ] Connection status = Available.
+- [ ] VIF status = Available, BGP state = Established (aws directconnect describe-virtual-interfaces).
+- [ ] Expected on-prem CIDRs appear in the VPC/TGW route table.
+- [ ] Expected AWS CIDRs are being advertised to on-prem (check on-prem router's BGP table).
+- [ ] Instance in AWS can reach on-prem resource, and vice versa.
+- [ ] If VPN backup configured: disable DX path and confirm automatic failover to VPN, then confirm failback when DX is restored

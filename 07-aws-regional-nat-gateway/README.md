@@ -78,10 +78,10 @@ Fine-grained per-AZ routing control (e.g., routing specific AZ traffic through d
 
 # Validation / Testing Checklist
 
-1. NAT Gateway created with Availability mode = Regional.
-2. Private subnet route table has a single 0.0.0.0/0 route pointing at the Regional NAT Gateway (verify it applies across all relevant AZs).
-3. Outbound internet access works from instances in every AZ tested.
-4. Adding a workload to a new AZ results in automatic expansion within the expected window.
-5. (If cost-sensitive) Compare NAT-related cost against an equivalent zonal, per-AZ design using Cost Explorer or the NAT Gateway line items.
-6. (If applicable) Confirm AWS Compute Optimizer's "unused NAT Gateway" recommendations aren't flagging misconfigured/idle NAT resources.
+- [ ] NAT Gateway created with Availability mode = Regional.
+- [ ] Private subnet route table has a single 0.0.0.0/0 route pointing at the Regional NAT Gateway (verify it applies across all relevant AZs).
+- [ ] Outbound internet access works from instances in every AZ tested.
+- [ ] Adding a workload to a new AZ results in automatic expansion within the expected window.
+- [ ] (If cost-sensitive) Compare NAT-related cost against an equivalent zonal, per-AZ design using Cost Explorer or the NAT Gateway line items.
+- [ ] (If applicable) Confirm AWS Compute Optimizer's "unused NAT Gateway" recommendations aren't flagging misconfigured/idle NAT resources.
 

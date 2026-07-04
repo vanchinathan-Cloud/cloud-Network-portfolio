@@ -63,10 +63,10 @@ BGP routing: on-prem router peers via BGP over the tunnel and advertises/receive
 
 # Validation / Testing Checklist
 
-1. Both VPN tunnels show UP in the AWS console
-2. VPC/TGW route table shows the propagated on-prem CIDR
-3. Instance in AWS can ping instance in on-prem simulator
-4. Instance in on-prem simulator can ping instance in AWS
-5. Traffic actually traverses the tunnel (check VPNTunnel CloudWatch metrics â€” TunnelState, TunnelDataIn/TunnelDataOut)
-6. Failover test: bring down Tunnel 1, confirm Tunnel 2 keeps traffic flowing
+- [ ] Both VPN tunnels show UP in the AWS console
+- [ ] VPC/TGW route table shows the propagated on-prem CIDR
+- [ ] Instance in AWS can ping instance in on-prem simulator
+- [ ] Instance in on-prem simulator can ping instance in AWS
+- [ ] Traffic actually traverses the tunnel (check VPNTunnel CloudWatch metrics â€” TunnelState, TunnelDataIn/TunnelDataOut)
+- [ ] Failover test: bring down Tunnel 1, confirm Tunnel 2 keeps traffic flowing
 

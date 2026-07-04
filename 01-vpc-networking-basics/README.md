@@ -64,13 +64,13 @@ with room for growth (extra AZs, extra tiers) from the start.
 
 # Validation / Testing Checklist
 
-1. VPC created with the planned CIDR block.
-2. Public and private subnets exist in 2+ AZs.
-3. Internet Gateway attached to the VPC.
-4. Public route table has 0.0.0.0/0 â†’ IGW, associated with public subnets.
-5. NAT Gateway created (with EIP) in a public subnet.
-6. Private route table has 0.0.0.0/0 â†’ NAT Gateway, associated with private subnets
-7. Public instance is reachable from the internet (e.g., SSH)
-8. Private instance is not reachable from the internet directly
-9. Private instance can reach the internet outbound (via NAT)
-10. Security groups restrict access to only what's needed (no unnecessary 0.0.0.0/0 inbound rules beyond intended ports)
+- [ ] VPC created with the planned CIDR block.
+- [ ] Public and private subnets exist in 2+ AZs.
+- [ ] Internet Gateway attached to the VPC.
+- [ ] Public route table has 0.0.0.0/0 â†’ IGW, associated with public subnets.
+- [ ] NAT Gateway created (with EIP) in a public subnet.
+- [ ] Private route table has 0.0.0.0/0 â†’ NAT Gateway, associated with private subnets
+- [ ] Public instance is reachable from the internet (e.g., SSH)
+- [ ] Private instance is not reachable from the internet directly
+- [ ] Private instance can reach the internet outbound (via NAT)
+- [ ] Security groups restrict access to only what's needed (no unnecessary 0.0.0.0/0 inbound rules beyond intended ports)

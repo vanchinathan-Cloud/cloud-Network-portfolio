@@ -75,11 +75,11 @@ Confirm RDS is not publicly accessible.
 8. Least-privilege IAM â€” the EC2 instance profile should only have the specific permissions it needs (e.g., secretsmanager:GetSecretValue on the one secret), not broad * access.
 
 # Validation / Testing Checklist:
-1. ALB DNS name / custom domain serves the app over HTTPS
-2. App instances have no public IP and are unreachable directly from the internet
-3. RDS "Publicly accessible" = No; unreachable outside the app SG
-4. Target group shows all instances Healthy
-5. Terminating an instance â†’ ASG replaces it automatically
-6. Scaling policy triggers scale-out under load and scale-in after
-7. RDS Multi-AZ failover test causes only a brief app interruption, then recovers
-8. Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
+- [ ] ALB DNS name / custom domain serves the app over HTTPS
+- [ ] App instances have no public IP and are unreachable directly from the internet
+- [ ] RDS "Publicly accessible" = No; unreachable outside the app SG
+- [ ] Target group shows all instances Healthy
+- [ ] Terminating an instance â†’ ASG replaces it automatically
+- [ ] Scaling policy triggers scale-out under load and scale-in after
+- [ ] RDS Multi-AZ failover test causes only a brief app interruption, then recovers
+- [ ] Secrets are pulled from Secrets Manager/Parameter Store, not hardcoded anywhere
