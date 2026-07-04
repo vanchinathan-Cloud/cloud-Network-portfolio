@@ -12,7 +12,7 @@ A hands-on AWS networking portfolio covering core VPC concepts through hybrid an
 |---|--------|-------|
 | 01 | [VPC Networking Basics](./01-vpc-networking-basics) | CIDR planning, subnets, route tables, IGW/NAT fundamentals |
 | 02 | [Secure S3 Static Website](./02-secure-s3-static-website) | S3 + CloudFront + Origin Access Control, HTTPS, private bucket pattern |
-| 03 | [Multi-Tier App (ALB + ASG + RDS)](./03-multi-tier-app-alb-asg) | Three-tier architecture, Auto Scaling, Multi-AZ RDS, security group chaining |
+| 03 | [Multi-Tier App (ALB + ASG + RDS)](./03-multi-tier-app-alb-asg-rds) | Three-tier architecture, Auto Scaling, Multi-AZ RDS, security group chaining |
 | 04 | [Transit Gateway Hub-and-Spoke](./04-transit-gateway-hub-spoke) | Centralized routing across multiple VPCs, route table segmentation |
 | 05 | [Site-to-Site VPN Lab](./05-site-to-site-vpn-lab) | IPsec VPN, Customer/Virtual Private Gateway, static vs. BGP routing |
 | 06 | [Hybrid Network — Direct Connect](./06-hybrid-network-direct-connect) | Dedicated fiber connectivity, Direct Connect Gateway, DX vs. VPN tradeoffs |
