@@ -1,4 +1,4 @@
-# 04-transit-gateway-hub-spoke
+# 04 transit-gateway-hub-spoke
 
  # Overview
 
