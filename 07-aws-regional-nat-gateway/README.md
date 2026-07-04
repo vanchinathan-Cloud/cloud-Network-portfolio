@@ -35,7 +35,7 @@ Zonal NAT Gateway (traditional) | Regional NAT Gateway (new)
 4. VPC-level route entry: Private subnets need just one route (0.0.0.0/0 → the Regional NAT Gateway ID) — the same entry works for every AZ, unlike zonal NAT where each AZ needs its own route table.
 5. VPC IPAM Policy (optional): Lets you centrally define which IP pool (Amazon-provided or BYOIP) the Regional NAT Gateway draws its addresses from, useful at scale for partner IP allowlisting via managed prefix lists.
 
-# Build Steps (typical order) ./AWS\_Regional NAT Gateway.docx
+# Build Steps (typical order) — see \[AWS\_Regional NAT Gateway.docx](./AWS\_Regional%20NAT%20Gateway.docx) for the full walkthrough
 
 1. Confirm VPC/subnet layout — private subnets across the AZs you want covered; no public subnets are required for the NAT Gateway itself (though you may still want one for other public-facing resources like an ALB).
 2. Create the NAT Gateway with Availability mode = Regional
@@ -43,9 +43,9 @@ Choose the VPC (no subnet selection — Regional NAT isn't tied to one).
 Choose Automatic (recommended — AWS manages IPs and AZ expansion) or Manual (you assign EIPs per AZ and control expansion yourself).
 
 (Manual mode only) Associate EIPs per AZ
-bash   aws ec2 associate-nat-gateway-address   
---nat-gateway-id nat-12345678   
---availability-zone us-east-1b   
+bash   aws ec2 associate-nat-gateway-address  
+--nat-gateway-id nat-12345678  
+--availability-zone us-east-1b  
 --allocation-ids eipalloc-12345678
 
 3. Add the route in each private subnet's route table (or a shared one, since the NAT Gateway isn't AZ-specific):0.0.0.0/0 → the Regional NAT Gateway ID (same target works for every AZ).
