@@ -1,4 +1,4 @@
-﻿# 02 â€“ Secure S3 Static Website
+﻿# 02  Secure S3 Static Website
 
 ## Overview
 This module hosts a **static website on Amazon S3**, fronted by **CloudFront** for HTTPS, caching, and global delivery â€” with the bucket itself kept **private** (no public bucket policy, no public ACLs). 
