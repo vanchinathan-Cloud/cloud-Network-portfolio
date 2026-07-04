@@ -1,4 +1,4 @@
-﻿# 01 â€“ VPC Networking Basics
+﻿# 01  VPC Networking Basics
 
 # Overview
 
