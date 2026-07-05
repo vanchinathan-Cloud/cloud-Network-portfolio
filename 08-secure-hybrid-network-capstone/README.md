@@ -1,4 +1,4 @@
-# Secure Hybrid Network Architecture on AWS
+# Secure Hybrid Network Architecture on AWS 
 
 This capstone project demonstrates the design and implementation of a secure, scalable hybrid network architecture connecting an on-premises data center to AWS. The architecture follows AWS best practices for security, high availability, and network segmentation — bringing together Transit Gateway, Site-to-Site VPN, and private VPC design from across this portfolio into one integrated reference architecture. The goal is secure private connectivity, centralized traffic control, and scalability for multi-VPC environments.
 
