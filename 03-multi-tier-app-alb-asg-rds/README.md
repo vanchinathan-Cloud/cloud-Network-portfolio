@@ -1,4 +1,4 @@
-# 03  Multi-Tier App (ALB + ASG + RDS)
+# 03  Multi-Tier App (ALB + ASG + RDS) 
 
 # Overview
 
