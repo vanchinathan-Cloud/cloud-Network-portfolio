@@ -1,4 +1,4 @@
-﻿# 05 Site-to-Site VPN Lab
+# 05 Site-to-Site VPN Lab
 
 # Overview
 

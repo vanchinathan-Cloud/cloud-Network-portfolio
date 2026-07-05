@@ -1,4 +1,4 @@
-﻿
+
 # 06 Hybrid-Network-Direct-Connect
 
 # Overview
