@@ -14,21 +14,20 @@ This capstone project demonstrates the design and implementation of a secure, sc
 
 ## Core Components
 
-**On-Premises**
-- Customer Gateway (firewall / router)
-- Private IP range (example: `192.168.0.0/16`)
-- BGP enabled for dynamic routing
-
-**AWS**
-- Amazon VPC (`10.0.0.0/16`)
-- Public and private subnets across multiple AZs
-- AWS Transit Gateway (hub)
-- Site-to-Site IPsec VPN (dual tunnels)
-- NAT Gateway for outbound internet access
-- Internet Gateway (public subnets only)
-- Security Groups and Network ACLs
-- IAM roles and policies
-- VPC Flow Logs and CloudTrail
+| Side | Component | Role |
+|---|---|---|
+| On-Premises | Customer Gateway | Firewall / router terminating the VPN on the on-prem side |
+| On-Premises | Private IP range | Example: `192.168.0.0/16` |
+| On-Premises | BGP | Enabled for dynamic routing over the VPN |
+| AWS | Amazon VPC | `10.0.0.0/16` |
+| AWS | Public and private subnets | Spread across multiple AZs |
+| AWS | AWS Transit Gateway | Central routing hub |
+| AWS | Site-to-Site IPsec VPN | Dual tunnels for redundancy |
+| AWS | NAT Gateway | Outbound internet access for private subnets |
+| AWS | Internet Gateway | Public subnets only |
+| AWS | Security Groups and Network ACLs | Instance- and subnet-level filtering |
+| AWS | IAM roles and policies | Least-privilege access control |
+| AWS | VPC Flow Logs and CloudTrail | Traffic visibility and API auditing |
 
 ### Traffic Flow
 

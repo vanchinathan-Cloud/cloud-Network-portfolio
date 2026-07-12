@@ -32,11 +32,13 @@ Full walkthrough: [AWS_Regional NAT Gateway.docx](./AWS_Regional%20NAT%20Gateway
 
 ## Core Components
 
-1. **NAT Gateway (Availability mode = Regional)** — The single, VPC-wide NAT resource — no subnet is specified at creation.
-2. **Elastic IP(s)** — Still required for translation; in Automatic mode AWS manages allocation (optionally from an IPAM pool), in Manual mode you assign EIPs per AZ yourself via `associate-nat-gateway-address`.
-3. **AWS-managed Route Table ("Edge Association")** — Automatically created for the Regional NAT Gateway with a default route to the Internet Gateway and a local route for the VPC CIDR. Limited customization — you can add routes for middlebox return traffic, but not for redirecting to a Transit Gateway.
-4. **VPC-level route entry** — Private subnets need just one route (`0.0.0.0/0` → the Regional NAT Gateway ID) — the same entry works for every AZ, unlike zonal NAT where each AZ needs its own route table.
-5. **VPC IPAM Policy (optional)** — Lets you centrally define which IP pool (Amazon-provided or BYOIP) the Regional NAT Gateway draws its addresses from, useful at scale for partner IP allowlisting via managed prefix lists.
+| Component | Purpose |
+|---|---|
+| **NAT Gateway (Availability mode = Regional)** | The single, VPC-wide NAT resource — no subnet is specified at creation. |
+| **Elastic IP(s)** | Still required for translation; in Automatic mode AWS manages allocation (optionally from an IPAM pool), in Manual mode you assign EIPs per AZ yourself via `associate-nat-gateway-address`. |
+| **AWS-managed Route Table ("Edge Association")** | Automatically created for the Regional NAT Gateway with a default route to the Internet Gateway and a local route for the VPC CIDR. Limited customization — you can add routes for middlebox return traffic, but not for redirecting to a Transit Gateway. |
+| **VPC-level route entry** | Private subnets need just one route (`0.0.0.0/0` → the Regional NAT Gateway ID) — the same entry works for every AZ, unlike zonal NAT where each AZ needs its own route table. |
+| **VPC IPAM Policy (optional)** | Lets you centrally define which IP pool (Amazon-provided or BYOIP) the Regional NAT Gateway draws its addresses from, useful at scale for partner IP allowlisting via managed prefix lists. |
 
 ## Build Steps
 

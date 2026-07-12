@@ -10,15 +10,17 @@ A VPC is your own logically isolated slice of the AWS network. Every other modul
 
 ## Core Components
 
-1. **CIDR Block** — The IP address range for your VPC (e.g., 10.0.0.0/16) and each subnet within it (e.g., 10.0.1.0/24). Determines how many IPs are available and how subnets can be carved up.
-2. **Subnet** — A range of IP addresses within the VPC, tied to a single Availability Zone. Subnets are "public" or "private" based on their route table, not any inherent property.
-3. **Availability Zone (AZ)** — An isolated physical data center location within a region. Spreading subnets across 2+ AZs is the basis for high availability.
-4. **Internet Gateway (IGW)** — A VPC-attached, horizontally scaled gateway that allows communication between the VPC and the internet. One per VPC.
-5. **Route Table** — A set of rules ("routes") that determine where network traffic is directed. Each subnet is associated with exactly one route table.
-6. **NAT Gateway** — Lets instances in private subnets initiate outbound internet connections without being directly reachable from the internet (see the dedicated NAT modules for HA/regional patterns).
-7. **Security Group** — A stateful, instance-level virtual firewall — controls inbound/outbound traffic per ENI/instance. Return traffic is automatically allowed.
-8. **Network ACL (NACL)** — A stateless, subnet-level firewall — evaluated in rule-number order, and you must explicitly allow both inbound and outbound (including ephemeral return ports).
-9. **Elastic IP (EIP)** — A static, public IPv4 address you can allocate and attach to resources (e.g., NAT Gateways, EC2 instances) so the public IP doesn't change on stop/start.
+| Component | Purpose |
+|---|---|
+| **CIDR Block** | The IP address range for your VPC (e.g., 10.0.0.0/16) and each subnet within it (e.g., 10.0.1.0/24). Determines how many IPs are available and how subnets can be carved up. |
+| **Subnet** | A range of IP addresses within the VPC, tied to a single Availability Zone. Subnets are "public" or "private" based on their route table, not any inherent property. |
+| **Availability Zone (AZ)** | An isolated physical data center location within a region. Spreading subnets across 2+ AZs is the basis for high availability. |
+| **Internet Gateway (IGW)** | A VPC-attached, horizontally scaled gateway that allows communication between the VPC and the internet. One per VPC. |
+| **Route Table** | A set of rules ("routes") that determine where network traffic is directed. Each subnet is associated with exactly one route table. |
+| **NAT Gateway** | Lets instances in private subnets initiate outbound internet connections without being directly reachable from the internet (see the dedicated NAT modules for HA/regional patterns). |
+| **Security Group** | A stateful, instance-level virtual firewall — controls inbound/outbound traffic per ENI/instance. Return traffic is automatically allowed. |
+| **Network ACL (NACL)** | A stateless, subnet-level firewall — evaluated in rule-number order, and you must explicitly allow both inbound and outbound (including ephemeral return ports). |
+| **Elastic IP (EIP)** | A static, public IPv4 address you can allocate and attach to resources (e.g., NAT Gateways, EC2 instances) so the public IP doesn't change on stop/start. |
 
 ### What Makes a Subnet "Public" vs. "Private"
 A subnet is only "public" if its route table has a route sending `0.0.0.0/0` traffic to an Internet Gateway. There's no separate "public subnet" checkbox — it's purely about routing:

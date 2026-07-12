@@ -12,11 +12,13 @@ This module implements a hub-and-spoke network topology on AWS using Transit Gat
 
 ## Core Components
 
-1. **Transit Gateway (TGW)** — The regional hub resource that routes traffic between attachments.
-2. **TGW Attachment** — Connects a VPC (via a subnet in each AZ), VPN, or Direct Connect Gateway to the TGW.
-3. **TGW Route Table** — Controls which attachments can reach which CIDR ranges. You can have multiple route tables to segment traffic (e.g., prod vs. dev).
-4. **VPC Route Table** — Each spoke VPC's subnet route table needs a route pointing non-local CIDRs at the TGW attachment (`tgw-xxxxxxxx`).
-5. **Association vs. Propagation** — Association = which route table an attachment uses to route ITS traffic. Propagation = which route table LEARNS routes FROM that attachment.
+| Component | Purpose |
+|---|---|
+| **Transit Gateway (TGW)** | The regional hub resource that routes traffic between attachments. |
+| **TGW Attachment** | Connects a VPC (via a subnet in each AZ), VPN, or Direct Connect Gateway to the TGW. |
+| **TGW Route Table** | Controls which attachments can reach which CIDR ranges. You can have multiple route tables to segment traffic (e.g., prod vs. dev). |
+| **VPC Route Table** | Each spoke VPC's subnet route table needs a route pointing non-local CIDRs at the TGW attachment (`tgw-xxxxxxxx`). |
+| **Association vs. Propagation** | Association = which route table an attachment uses to route ITS traffic. Propagation = which route table LEARNS routes FROM that attachment. |
 
 ### Route Table Segmentation Patterns
 1. **Single TGW route table (flat/full-mesh)** — every spoke can reach every other spoke. Simple but least isolation.

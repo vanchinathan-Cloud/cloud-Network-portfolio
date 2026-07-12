@@ -11,11 +11,13 @@ Full walkthrough: [AWS_Site-to-Site VPN Setup.docx](./AWS_Site-to-Site%20VPN%20S
 
 ## Core Components
 
-1. **Customer Gateway (CGW)** — Represents the on-prem side — its public IP and BGP ASN (if using dynamic routing).
-2. **Virtual Private Gateway (VGW) or Transit Gateway (TGW)** — The AWS side termination point. VGW attaches to a single VPC; TGW lets the VPN act as one more spoke alongside your other VPCs.
-3. **Site-to-Site VPN Connection** — The actual IPsec tunnel(s) between CGW and VGW/TGW — AWS creates two tunnels for redundancy.
-4. **Routing (static or BGP/dynamic)** — Determines how routes are exchanged — static CIDR entries, or BGP if the on-prem device supports it.
-5. **On-prem simulator** — EC2 instance running strongSwan/Libreswan, or a second VPC with a software VPN appliance, standing in for a real on-prem router.
+| Component | Purpose |
+|---|---|
+| **Customer Gateway (CGW)** | Represents the on-prem side — its public IP and BGP ASN (if using dynamic routing). |
+| **Virtual Private Gateway (VGW) or Transit Gateway (TGW)** | The AWS side termination point. VGW attaches to a single VPC; TGW lets the VPN act as one more spoke alongside your other VPCs. |
+| **Site-to-Site VPN Connection** | The actual IPsec tunnel(s) between CGW and VGW/TGW — AWS creates two tunnels for redundancy. |
+| **Routing (static or BGP/dynamic)** | Determines how routes are exchanged — static CIDR entries, or BGP if the on-prem device supports it. |
+| **On-prem simulator** | EC2 instance running strongSwan/Libreswan, or a second VPC with a software VPN appliance, standing in for a real on-prem router. |
 
 ### Two Ways to Terminate the VPN
 1. **VPN → Virtual Private Gateway (VGW) → single VPC** — Simple, classic setup. Good for a single VPC use case.

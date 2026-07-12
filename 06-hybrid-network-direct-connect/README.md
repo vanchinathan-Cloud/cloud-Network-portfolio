@@ -23,12 +23,14 @@ Many real deployments run both: DX as primary, Site-to-Site VPN as automatic fai
 
 ## Core Components
 
-1. **Direct Connect Location** — Physical colocation facility where your router meets AWS's router.
-2. **Connection** — The physical port (dedicated 1/10/100 Gbps) or hosted connection (via an AWS Direct Connect Partner) at that location.
-3. **Virtual Interface (VIF)** — A logical, VLAN-tagged interface over the physical connection. Three types: Private VIF (to a VPC via VGW/DXGW), Public VIF (to AWS public services/S3 without traversing internet), Transit VIF (to a Transit Gateway via DXGW).
-4. **Direct Connect Gateway (DXGW)** — A global resource that lets one DX connection reach VPCs/TGWs across multiple regions and accounts — without it, a private VIF only reaches one VPC.
-5. **BGP Session** — DX uses BGP for dynamic routing — routes are exchanged automatically between your router and AWS's.
-6. **LOA-CFA (Letter of Authorization – Connecting Facility Assignment)** — The document AWS issues authorizing the physical cross-connect at the DX location — needed for real (non-simulated) provisioning.
+| Component | Purpose |
+|---|---|
+| **Direct Connect Location** | Physical colocation facility where your router meets AWS's router. |
+| **Connection** | The physical port (dedicated 1/10/100 Gbps) or hosted connection (via an AWS Direct Connect Partner) at that location. |
+| **Virtual Interface (VIF)** | A logical, VLAN-tagged interface over the physical connection. Three types: Private VIF (to a VPC via VGW/DXGW), Public VIF (to AWS public services/S3 without traversing internet), Transit VIF (to a Transit Gateway via DXGW). |
+| **Direct Connect Gateway (DXGW)** | A global resource that lets one DX connection reach VPCs/TGWs across multiple regions and accounts — without it, a private VIF only reaches one VPC. |
+| **BGP Session** | DX uses BGP for dynamic routing — routes are exchanged automatically between your router and AWS's. |
+| **LOA-CFA (Letter of Authorization – Connecting Facility Assignment)** | The document AWS issues authorizing the physical cross-connect at the DX location — needed for real (non-simulated) provisioning. |
 
 ### Two Ways to Attach to Your Network
 1. **Private VIF → Virtual Private Gateway → single VPC** — Classic setup, same pattern as a VPN's VGW attachment.
