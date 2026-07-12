@@ -51,11 +51,14 @@ This module builds a three-tier, highly available web application on AWS with au
 14. **Test failover**: simulate primary region health check failure, confirm Route 53 shifts traffic, confirm RDS replica promotion path, confirm S3 CRR data is current.
 
 ## Lessons Learned
+
+*The points below reflect well-documented AWS behavior and common design tradeoffs for this pattern — useful context if you're implementing it, presented here as reference knowledge rather than a first-person debugging log for this specific build.*
+
 - **Route 53 health check granularity matters.** Pointing the health check at the ALB alone doesn't catch application-level failures (e.g., a healthy ALB serving 500s from a broken app tier) — the check needs to hit an actual app health endpoint, not just infrastructure.
-- **Warm standby sizing is a real cost/RTO tradeoff.** Setting DR ASG `min:1` keeps idle cost low but adds scale-out time during failover — worth explicitly testing how long it actually takes to reach serving capacity under load, rather than assuming the 15-minute RTO target is met by default.
-- **RDS read replica promotion is not instantaneous** and replication lag can spike under heavy primary write load — the RPO target of <5 min needs to be validated against realistic write throughput, not just idle-state replication lag.
-- **S3 CRR has propagation delay for large objects.** Cross-region replication is asynchronous — don't assume DR region S3 is byte-for-byte current at the moment of failover.
-- **Subnet CIDR planning across regions needs to avoid overlap** if VPC peering or a transit gateway is ever added later — 10.0.0.0/16 (primary) and 10.1.0.0/16 (DR) were chosen specifically to leave room for that.
+- **Warm standby sizing is a real cost/RTO tradeoff.** Setting DR ASG `min:1` keeps idle cost low but adds scale-out time during failover — this is a tradeoff worth explicitly load-testing for any real deployment, since scale-out time under load can vary from theoretical estimates.
+- **RDS read replica promotion is not instantaneous**, and replication lag can spike under heavy primary write load — an RPO target should be validated against realistic write throughput, not just idle-state replication lag.
+- **S3 CRR has propagation delay for large objects.** Cross-region replication is asynchronous — DR region S3 shouldn't be assumed byte-for-byte current at the moment of failover.
+- **Subnet CIDR planning across regions should avoid overlap** if VPC peering or a transit gateway might be added later — `10.0.0.0/16` (primary) and `10.1.0.0/16` (DR) leave room for that.
 
 ## Validation Checklist
 - [ ] ALB health checks show all EC2 instances in the ASG as healthy across all 3 AZs

@@ -54,11 +54,13 @@ Many real deployments run both: DX as primary, Site-to-Site VPN as automatic fai
 
 ## Lessons Learned
 
+*This module's build steps are largely simulated/documented (real Direct Connect requires ordering a physical cross-connect — see the note under Build Steps). The points below reflect well-documented AWS behavior and common gotchas with this pattern, presented as reference knowledge rather than a first-person debugging log.*
+
 - DX is not encrypted by default — if data must be encrypted in transit, layer IPsec VPN over the DX private VIF, or use MACsec (available on certain dedicated connection speeds) for link-layer encryption.
-- A private VIF only reaches one VPC unless you use a Direct Connect Gateway — a common mistake is expecting a private VIF alone to reach multiple VPCs.
-- Allowed prefixes matter on Transit VIFs — if you forget to update the allowed prefix list on the DXGW-to-TGW association, new on-prem CIDRs won't be learned even if BGP has them.
-- BGP ASN conflicts — using the same ASN on both ends (or an ASN already in use elsewhere in your network) breaks peering; plan your ASN allocation.
-- Physical provisioning is slow — real DX orders can take days to weeks; always plan a VPN fallback if you have a hard deadline.
+- A private VIF only reaches one VPC unless a Direct Connect Gateway is used — a common mistake is expecting a private VIF alone to reach multiple VPCs.
+- Allowed prefixes matter on Transit VIFs — if the allowed prefix list on the DXGW-to-TGW association isn't updated, new on-prem CIDRs won't be learned even if BGP has them.
+- BGP ASN conflicts — using the same ASN on both ends (or an ASN already in use elsewhere in the network) breaks peering; ASN allocation needs planning.
+- Physical provisioning is slow — real DX orders can take days to weeks; a VPN fallback is worth planning for if there's a hard deadline.
 - Hosted vs. dedicated connections differ in who owns capacity management — hosted connections have fixed bandwidth set by the partner and can't be resized without re-ordering.
 - Public VIFs need care — they can reach all AWS public IP ranges globally, which is powerful but also a broader attack surface if not paired with proper route filtering/BGP communities.
 

@@ -39,12 +39,14 @@ This module implements a hub-and-spoke network topology on AWS using Transit Gat
 
 ## Lessons Learned
 
+*The points below reflect well-documented AWS behavior and common gotchas with this pattern — useful context for anyone implementing it, presented here as reference knowledge rather than a first-person debugging log for this specific build.*
+
 - CIDR ranges across all VPCs must not overlap.
-- A VPC route table entry pointing at the TGW only takes effect for subnets actually listed in that route table — check every subnet that needs it.
+- A VPC route table entry pointing at the TGW only takes effect for subnets actually listed in that route table — worth checking every subnet that needs it.
 - TGW attachments need a subnet in each AZ you want to route through, for HA; missing an AZ means instances there can't use the attachment.
-- Remember both directions: spoke → hub/other-spoke and the return route back, or you'll get asymmetric routing / blackholed traffic.
-- Data transfer through TGW is billed per GB plus a per-attachment hourly charge — worth calling out in the cost section of the write-up.
-- If you added a firewall/NVA in the hub VPC for inspection, you need an additional "inspection" TGW route table so traffic is routed through the appliance rather than directly hub-to-spoke.
+- Both directions matter: spoke → hub/other-spoke and the return route back — missing either direction causes asymmetric routing or blackholed traffic.
+- Data transfer through TGW is billed per GB plus a per-attachment hourly charge — worth factoring into any cost estimate.
+- If a firewall/NVA is added in the hub VPC for inspection, an additional "inspection" TGW route table is needed so traffic routes through the appliance rather than directly hub-to-spoke.
 
 ## Validation Checklist
 

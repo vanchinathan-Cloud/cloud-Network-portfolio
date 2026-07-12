@@ -90,10 +90,12 @@ Amazon VPC · AWS Transit Gateway · Site-to-Site VPN · Amazon EC2 · Amazon Cl
 
 ## Lessons Learned
 
+*This capstone integrates patterns from Modules 01–07. The points below reflect well-documented AWS design principles for this kind of hybrid architecture, presented as reference knowledge rather than a first-person debugging log for this specific build.*
+
 - Routing everything through Transit Gateway (rather than VPC peering) keeps segmentation clean and makes it possible to enforce "no direct spoke-to-spoke" policies in one place instead of per-VPC.
-- Dual VPN tunnels only provide real HA if both the on-prem CGW and AWS side are configured for active/active — a passive second tunnel silently reintroduces a single point of failure.
-- Flow Logs at both the VPC and Transit Gateway level are necessary — VPC Flow Logs alone don't show cross-VPC transit traffic clearly.
-- Keeping shared services (monitoring, logging, shared tooling) in their own VPC/route table, isolated from application workloads, made least-privilege IAM and security group rules much easier to reason about.
+- Dual VPN tunnels only provide real HA if both the on-prem CGW and AWS side are configured for active/active — a passive second tunnel can silently reintroduce a single point of failure.
+- Flow Logs at both the VPC and Transit Gateway level give a more complete picture — VPC Flow Logs alone don't show cross-VPC transit traffic clearly.
+- Keeping shared services (monitoring, logging, shared tooling) in their own VPC/route table, isolated from application workloads, is a common pattern that makes least-privilege IAM and security group rules easier to reason about.
 
 ## Validation Checklist
 
