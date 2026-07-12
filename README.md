@@ -49,10 +49,10 @@ Built to demonstrate practical, hands-on AWS networking skills — from foundati
 
 ## About Me
 
-**[VANCHINATHAN.P]** — , "Cloud/Network Engineer" 
+VANCHINATHAN.P —  Senior Network & Cloud Architect
 
-- 🔗 [LinkedIn](https://linkedin.com/in/vanchinathan-p)
-- 📧 [your-email@example.com](mailto:vanchi.sit@gmail.com)
-- 📄 [Resume](#) *(link to a hosted PDF or Google Doc)*
+- 🔗 https://linkedin.com/in/vanchinathan-p
+- 📧 mailto:vanchi.sit@gmail.com
+  
 
 
