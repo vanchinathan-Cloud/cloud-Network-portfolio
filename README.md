@@ -49,10 +49,10 @@ Built to demonstrate practical, hands-on AWS networking skills — from foundati
 
 ## About Me
 
-**[Your Name]** — [Your target role, e.g., "Cloud/Network Engineer" or "AWS Solutions Architect"]
+VANCHINATHAN.P —  Senior Network & Cloud Architect
 
-- 🔗 [LinkedIn](https://linkedin.com/in/your-profile)
-- 📧 [your-email@example.com](mailto:your-email@example.com)
-- 📄 [Resume](#) *(link to a hosted PDF or Google Doc)*
+- 🔗 https://linkedin.com/in/vanchinathan-p
+- 📧 mailto:vanchi.sit@gmail.com
+  
 
-*(Replace the placeholders above with your real details before sharing this repo.)*
+
