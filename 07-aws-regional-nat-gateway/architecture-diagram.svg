@@ -10,6 +10,13 @@
   <rect x="310" y="85" width="180" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
   <text x="400" y="110" text-anchor="middle" font-size="12" fill="#333333">Internet Gateway</text>
 
+  <!-- EC2 Instance Connect Endpoint -->
+  <rect x="600" y="80" width="180" height="50" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="690" y="100" text-anchor="middle" font-size="10" fill="#5C1466" font-weight="bold">EC2 Instance Connect</text>
+  <text x="690" y="113" text-anchor="middle" font-size="10" fill="#5C1466" font-weight="bold">Endpoint</text>
+  <text x="690" y="126" text-anchor="middle" font-size="8" fill="#5C1466">SSH to private EC2, no bastion</text>
+  <line x1="690" y1="130" x2="630" y2="280" stroke="#8E24AA" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+
   <!-- VPC container -->
   <rect x="40" y="140" width="720" height="330" rx="16" fill="#FAFAFA" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
   <text x="58" y="163" font-size="13" fill="#444444" font-weight="bold">VPC — no public subnet required</text>

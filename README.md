@@ -28,9 +28,9 @@ A hands-on AWS networking portfolio covering core VPC concepts through hybrid an
 | 11 | CloudFront + Global Accelerator | Planned |
 | 12 | Route 53 Failover Routing | Planned |
 | 13 | VPC Endpoints (Private Access) | Planned |
-| 14 | Multi-Region Disaster Recovery | Planned |
+| 14 | AWS Organizations & Multi-Account Landing Zone | Planned |
 
-> **Note:** "VPC Peering — Cross Region" and "Highly Available NAT Gateway" from the original roadmap were superseded — VPC Peering concepts are covered within the Transit Gateway module, and NAT HA is now covered by the Regional NAT Gateway module (07), which replaces the older per-AZ pattern. Module 08 was assembled from a standalone capstone folder that predated the numbered module structure.
+> **Note:** "VPC Peering — Cross Region" and "Highly Available NAT Gateway" from the original roadmap were superseded — VPC Peering concepts are covered within the Transit Gateway module, and NAT HA is now covered by the Regional NAT Gateway module (07), which replaces the older per-AZ pattern. "Multi-Region Disaster Recovery" was also removed from this list since it's already delivered in full by Module 03. Module 08 was assembled from a standalone capstone folder that predated the numbered module structure.
 
 ---
 
@@ -46,3 +46,13 @@ Every module folder follows the same format:
 ## About This Portfolio
 
 Built to demonstrate practical, hands-on AWS networking skills — from foundational VPC design through advanced hybrid connectivity — with an emphasis on documenting *why* each pattern is used, not just the console clicks to build it.
+
+## About Me
+
+**[Your Name]** — [Your target role, e.g., "Cloud/Network Engineer" or "AWS Solutions Architect"]
+
+- 🔗 [LinkedIn](https://linkedin.com/in/your-profile)
+- 📧 [your-email@example.com](mailto:your-email@example.com)
+- 📄 [Resume](#) *(link to a hosted PDF or Google Doc)*
+
+*(Replace the placeholders above with your real details before sharing this repo.)*

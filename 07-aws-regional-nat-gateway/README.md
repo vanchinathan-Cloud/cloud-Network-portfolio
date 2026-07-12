@@ -15,7 +15,9 @@ Key characteristics:
 - No need to have public subnets for the Regional NAT Gateway
 - Comes with its own route table
 
-Full walkthrough: [AWS_Regional NAT Gateway.docx](./AWS_Regional%20NAT%20Gateway.docx)
+Full walkthrough: [WALKTHROUGH.md](./WALKTHROUGH.md)
+
+This lab builds a fully private application tier — no public IPs, no bastion host — using **EC2 Instance Connect Endpoint** for SSH access, and a single **Regional NAT Gateway** for outbound internet across two AZs.
 
 ### Regional vs. Zonal NAT Gateway
 
@@ -39,22 +41,18 @@ Full walkthrough: [AWS_Regional NAT Gateway.docx](./AWS_Regional%20NAT%20Gateway
 | **AWS-managed Route Table ("Edge Association")** | Automatically created for the Regional NAT Gateway with a default route to the Internet Gateway and a local route for the VPC CIDR. Limited customization — you can add routes for middlebox return traffic, but not for redirecting to a Transit Gateway. |
 | **VPC-level route entry** | Private subnets need just one route (`0.0.0.0/0` → the Regional NAT Gateway ID) — the same entry works for every AZ, unlike zonal NAT where each AZ needs its own route table. |
 | **VPC IPAM Policy (optional)** | Lets you centrally define which IP pool (Amazon-provided or BYOIP) the Regional NAT Gateway draws its addresses from, useful at scale for partner IP allowlisting via managed prefix lists. |
+| **EC2 Instance Connect Endpoint** | Lets you SSH into fully private instances (no public IP) directly from the console, without a bastion host or any inbound internet rule — used in this lab to reach and test the private app instances. |
 
 ## Build Steps
 
-1. **Confirm VPC/subnet layout** — private subnets across the AZs you want covered; no public subnets are required for the NAT Gateway itself (though you may still want one for other public-facing resources like an ALB).
-2. **Create the NAT Gateway with Availability mode = Regional** — Choose the VPC (no subnet selection — Regional NAT isn't tied to one). Choose Automatic (recommended — AWS manages IPs and AZ expansion) or Manual (you assign EIPs per AZ and control expansion yourself).
-   - (Manual mode only) Associate EIPs per AZ:
-     ```bash
-     aws ec2 associate-nat-gateway-address \
-       --nat-gateway-id nat-12345678 \
-       --availability-zone us-east-1b \
-       --allocation-ids eipalloc-12345678
-     ```
-3. **Add the route** in each private subnet's route table (or a shared one, since the NAT Gateway isn't AZ-specific): `0.0.0.0/0` → the Regional NAT Gateway ID (same target works for every AZ).
-4. **(Optional) Review the AWS-managed route table** created for the NAT Gateway — it comes with a default route to the Internet Gateway and can be extended for return routes to middleboxes (e.g., a Gateway Load Balancer / Network Firewall endpoint), but not for TGW redirection.
-5. **(Optional) Attach an IPAM policy** if you need centralized, scoped control over which IP pool the NAT Gateway draws from — useful for organizations needing predictable, allowlistable IP ranges.
-6. **Test** — Launch an instance in a new AZ that previously had no workloads; confirm outbound internet access starts working within the expected expansion window (~15–20 min typical, up to 60 min). Confirm there's no need to touch route tables or create new NAT Gateways as you add AZs.
+1. **Create the VPC and subnets** — one subnet for an EC2 Instance Connect Endpoint, and app subnets in 2+ AZs for the private workloads.
+2. **Create the EC2 Instance Connect Endpoint** in its dedicated subnet, with a security group allowing outbound only — this is what enables SSH to fully private instances with no bastion host.
+3. **Launch app instances** in the private app subnets, with security groups allowing SSH only from the Instance Connect Endpoint's security group (never `0.0.0.0/0`).
+4. **Confirm the "before" state** — connect via EC2 Instance Connect Endpoint and verify outbound internet (e.g., `ping google.com`) fails, since there's no route yet.
+5. **Create the NAT Gateway with Availability mode = Regional** — Public connectivity, Automatic Elastic IP allocation.
+6. **Add the route** in the app subnets' route table (not the endpoint subnet's): `0.0.0.0/0` → the Regional NAT Gateway.
+7. **Re-test** from each app instance — outbound internet access should now work, using the same NAT Gateway for both AZs with no per-AZ setup.
+8. **Clean up** — delete the test EC2 instances and the NAT Gateway once validated, since NAT Gateways bill hourly.
 
 ### When to Use Regional vs. Zonal
 - **Use Regional NAT Gateway** for most new VPC designs — simpler routing, automatic HA, no public subnet requirement, avoids cross-AZ NAT charges.
@@ -62,19 +60,22 @@ Full walkthrough: [AWS_Regional NAT Gateway.docx](./AWS_Regional%20NAT%20Gateway
 
 ## Lessons Learned
 
-- AZ expansion is not instant — after a resource appears in a new AZ, it can take up to ~60 minutes (commonly 15–20) for the Regional NAT Gateway to expand coverage there. Until then, traffic from that AZ is processed via an existing AZ's path, which can incur cross-AZ charges during the transition window.
-- Not currently compatible with centralized egress via Transit Gateway — the Regional NAT Gateway's AWS-managed route table can't be customized to send return traffic back through a TGW to spoke VPCs. For a hub VPC centralized-NAT pattern (like Module 04's TGW hub), the traditional zonal NAT Gateway is still the documented approach.
-- Expansion is triggered by ENI presence, not active traffic — a resource just existing in a new AZ triggers expansion, whether or not it's actively sending traffic.
-- No public subnet needed — this can simplify VPC design and reduce the "accidentally public" surface area, but if you still need a public subnet for other resources (e.g., ALB, bastion), that's unrelated and still required for those specific resources.
-- Manual mode shifts more responsibility to you — if you choose Manual, you're responsible for assigning IPs per AZ and don't get the automatic AZ expansion/contraction that makes Regional NAT appealing in the first place; Automatic mode is what most guidance recommends.
-- Reduces, but doesn't necessarily eliminate cost — it removes the need for multiple NAT Gateways and their associated EIPs/hourly charges, and avoids cross-AZ NAT data-processing charges, but data-processing charges for traffic through the NAT itself still apply. Worth doing a side-by-side cost comparison against a 3-AZ zonal design for your specific traffic pattern.
-- Regional availability, with exceptions — available in all commercial AWS Regions except AWS GovCloud (US) and China Regions as of its initial launch; verify current availability in your target region.
+**From this build:**
+- **Ping fails until both the NAT Gateway exists *and* the route table points to it** — creating the NAT Gateway alone didn't get outbound traffic flowing; the app subnet route table needed an explicit `0.0.0.0/0` → NAT Gateway route added afterward.
+- **EC2 Instance Connect Endpoint removes the need for a bastion host or public IPs entirely** — both app instances stayed fully private (no public IP, no `0.0.0.0/0` inbound SSH rule) and were still reachable for testing directly from the console.
+- **The endpoint subnet and the app subnets need different route table associations** — the `EC2-endpoint-Private` subnet was deliberately left off the `app-private` route table association; only the two app subnets needed the NAT route.
+- **NAT Gateways bill hourly regardless of use** — after confirming ping worked from both AZs, the right move was to delete the NAT Gateway (and test instances) immediately rather than leave it running idle.
+
+**Also worth knowing (documented AWS behavior, not independently re-verified in this lab):**
+- AZ expansion for a Regional NAT Gateway is not instant — AWS documents this as typically 15–20 minutes, up to ~60 minutes, when a resource first appears in a new AZ.
+- Regional NAT Gateway is not currently compatible with centralized egress through a Transit Gateway hub — the AWS-managed route table can't be redirected to a TGW. For that pattern (like Module 04's hub-and-spoke), the traditional zonal NAT Gateway is still the documented approach.
+- Manual mode shifts EIP and AZ-coverage responsibility to you — Automatic mode is what AWS recommends for most cases.
 
 ## Validation Checklist
 
-- [ ] NAT Gateway created with Availability mode = Regional
-- [ ] Private subnet route table has a single `0.0.0.0/0` route pointing at the Regional NAT Gateway (verify it applies across all relevant AZs)
-- [ ] Outbound internet access works from instances in every AZ tested
-- [ ] Adding a workload to a new AZ results in automatic expansion within the expected window
-- [ ] (If cost-sensitive) Compare NAT-related cost against an equivalent zonal, per-AZ design using Cost Explorer or the NAT Gateway line items
-- [ ] (If applicable) Confirm AWS Compute Optimizer's "unused NAT Gateway" recommendations aren't flagging misconfigured/idle NAT resources
+- [ ] EC2 Instance Connect Endpoint created and reachable — no bastion host, no public IPs on app instances
+- [ ] Outbound internet fails from app instances *before* the NAT route is added (confirms the "before" state is real, not assumed)
+- [ ] NAT Gateway created with Availability mode = Regional, Elastic IP allocated
+- [ ] App subnet route table has `0.0.0.0/0` → Regional NAT Gateway (endpoint subnet route table left unchanged)
+- [ ] Outbound internet access works from app instances in both AZs using the same NAT Gateway
+- [ ] Test resources (EC2 instances, NAT Gateway) deleted after validation to avoid ongoing cost
