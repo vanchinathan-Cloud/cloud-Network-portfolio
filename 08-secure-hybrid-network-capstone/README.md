@@ -1,18 +1,16 @@
-# Secure Hybrid Network Architecture on AWS 
+# 08 — Secure Hybrid Network Architecture (Capstone)
 
+![Architecture Diagram](./architecture-diagram.png)
+
+## Overview
 This capstone project demonstrates the design and implementation of a secure, scalable hybrid network architecture connecting an on-premises data center to AWS. The architecture follows AWS best practices for security, high availability, and network segmentation — bringing together Transit Gateway, Site-to-Site VPN, and private VPC design from across this portfolio into one integrated reference architecture. The goal is secure private connectivity, centralized traffic control, and scalability for multi-VPC environments.
 
-## Objectives
-
+### Objectives
 - Securely connect on-premises infrastructure to AWS
 - Centralize routing and control using AWS Transit Gateway
 - Implement defense-in-depth network security
 - Enable high availability and failover
 - Provide visibility and monitoring for network traffic
-
-## Architecture Diagram
-
-![Secure Hybrid Network Architecture on AWS](./architecture-diagram.png)
 
 ## Core Components
 
@@ -32,7 +30,7 @@ This capstone project demonstrates the design and implementation of a secure, sc
 - IAM roles and policies
 - VPC Flow Logs and CloudTrail
 
-## Traffic Flow
+### Traffic Flow
 
 **On-prem → AWS private EC2**
 1. Traffic leaves the on-prem router
@@ -46,7 +44,7 @@ This capstone project demonstrates the design and implementation of a secure, sc
 2. NAT Gateway routes traffic via the Internet Gateway
 3. No inbound internet access to private subnets
 
-## Security Design
+### Security Design
 
 **Defense in depth**
 - Encrypted IPsec tunnels for hybrid connectivity
@@ -61,27 +59,24 @@ This capstone project demonstrates the design and implementation of a secure, sc
 - Separate route tables per VPC
 - Shared services isolated from application workloads
 
-## High Availability & Resilience
-
+### High Availability & Resilience
 - Dual VPN tunnels (active/active)
 - Multi-AZ subnets
 - Highly available Transit Gateway
 - NAT Gateway per AZ
 - BGP-based failover for hybrid connectivity
 
-## Monitoring & Logging
-
+### Monitoring & Logging
 - VPC Flow Logs for traffic visibility
 - Transit Gateway Flow Logs
 - CloudWatch metrics and alarms
 - CloudTrail for API auditing
 - AWS Config for compliance monitoring
 
-## Tools & Services Used
-
+### Tools & Services Used
 Amazon VPC · AWS Transit Gateway · Site-to-Site VPN · Amazon EC2 · Amazon CloudWatch · AWS CloudTrail · IAM · AWS Direct Connect
 
-## Build Steps (typical order)
+## Build Steps
 
 1. Design the AWS-side VPC (`10.0.0.0/16`) with public and private subnets across 2+ AZs — see [Module 01](../01-vpc-networking-basics) for the base pattern.
 2. Deploy the Transit Gateway as the central hub — see [Module 04](../04-transit-gateway-hub-spoke) for attachment and route table design.
@@ -99,7 +94,7 @@ Amazon VPC · AWS Transit Gateway · Site-to-Site VPN · Amazon EC2 · Amazon Cl
 - Flow Logs at both the VPC and Transit Gateway level are necessary — VPC Flow Logs alone don't show cross-VPC transit traffic clearly.
 - Keeping shared services (monitoring, logging, shared tooling) in their own VPC/route table, isolated from application workloads, made least-privilege IAM and security group rules much easier to reason about.
 
-## Validation / Testing Checklist
+## Validation Checklist
 
 - [ ] On-prem instance can reach a private EC2 instance in AWS only via the VPN tunnel (not directly over the internet)
 - [ ] Both VPN tunnels show `UP` status, and failover works if one is taken down
