@@ -1,46 +1,70 @@
-# Three-Tier Highly Available Web Application with Multi-Region Disaster Recovery
+# 03 — Multi-Tier Application: ALB + ASG + RDS (with Multi-Region DR)
 
 ![Architecture Diagram](./three-tier-ha-dr-architecture.png)
 
 ## Overview
-A production-grade AWS reference architecture for a three-tier web application with automated multi-region failover. Designed for **99.99% availability** with an **RTO < 15 minutes** and **RPO < 5 minutes**.
+This module builds a three-tier, highly available web application on AWS with automated multi-region disaster recovery. The goal is to demonstrate a production-realistic pattern — public/private/data subnet separation, Auto Scaling behind an ALB, Multi-AZ RDS, and a warm-standby DR region — rather than a toy single-AZ deployment.
 
-- **Primary Region:** us-east-1
-- **DR Region:** us-west-2 (warm standby)
+**Design targets:**
+- 99.99% availability
+- RTO < 15 minutes
+- RPO < 5 minutes
 
-## Architecture Highlights
+**Primary Region:** us-east-1 | **DR Region:** us-west-2 (warm standby)
 
-### Edge & Security
-- **Route 53** — DNS failover routing with health checks to trigger automatic regional failover
-- **AWS WAF** — OWASP-based rule set protecting against common web exploits
-- **CloudFront** — Global CDN edge distribution
-- **ACM** — TLS/SSL certificate management
+## Core Components
 
-### Primary Region (us-east-1) — VPC 10.0.0.0/16
-- **Public tier:** 3× NAT Gateways + Application Load Balancer across 3 AZs
-- **App tier:** EC2 (t3.medium) in an Auto Scaling Group (min:2, desired:3, max:10) across 3 private subnets
-- **Data tier:** RDS MySQL (Multi-AZ primary + standby), ElastiCache Redis (primary + replica), CodePipeline for CI/CD
+| Layer | Service | Purpose |
+|---|---|---|
+| Edge/Security | Route 53 | DNS failover routing, health-check-triggered failover |
+| Edge/Security | AWS WAF | OWASP rule set at the edge |
+| Edge/Security | CloudFront | Global CDN distribution |
+| Edge/Security | ACM | TLS/SSL certificates |
+| Networking | VPC (10.0.0.0/16 primary, 10.1.0.0/16 DR) | Isolated network per region |
+| Networking | NAT Gateways (×3) | Outbound internet for private subnets |
+| Compute | Application Load Balancer | Multi-AZ traffic distribution |
+| Compute | EC2 (t3.medium) + Auto Scaling Group | App tier, min:2 desired:3 max:10 (primary), min:1 max:6 (DR) |
+| Data | RDS MySQL (Multi-AZ) | Primary + standby, DR read replica (promotable) |
+| Data | ElastiCache Redis | Primary + replica (in-region), DR replica |
+| Data | S3 + Cross-Region Replication | Static assets, continuous sync to DR |
+| CI/CD | CodePipeline | Deployment automation |
+| Security | Secrets Manager, KMS, GuardDuty | Credential management, encryption, threat detection |
+| Operations | CloudTrail, AWS Config, AWS Backup (35-day), SSM, CloudWatch | Audit, compliance, monitoring |
 
-### DR Region (us-west-2) — VPC 10.1.0.0/16, Warm Standby
-- ALB + EC2 Auto Scaling Group (min:1, max:6) kept warm for fast scale-out
-- RDS Read Replica (promotable) kept in sync with primary
-- ElastiCache Redis (DR) and S3 Cross-Region Replication (CRR)
+## Build Steps
 
-### Cross-Cutting Services
-- **Security:** Secrets Manager, KMS, GuardDuty, ACM
-- **Operations:** CloudTrail, AWS Config, AWS Backup (35-day retention), Systems Manager (SSM), CloudWatch
+1. **Provision primary VPC** (10.0.0.0/16) across 3 AZs in us-east-1 with public, private (app), and DB subnets in each AZ.
+2. **Deploy NAT Gateways** in each public subnet for private subnet egress.
+3. **Deploy the Application Load Balancer** across the 3 public subnets.
+4. **Create the Auto Scaling Group** (EC2 t3.medium, min:2 desired:3 max:10) in the private app subnets, registered to the ALB target group.
+5. **Deploy RDS MySQL Multi-AZ** in the DB subnets (primary + synchronous standby).
+6. **Deploy ElastiCache Redis** (primary + replica) alongside RDS.
+7. **Set up CodePipeline** for CI/CD into the ASG.
+8. **Provision the DR VPC** (10.1.0.0/16) in us-west-2 with matching subnet structure.
+9. **Deploy a warm-standby ALB + ASG** in DR (min:1 max:6) — intentionally smaller than primary to reduce idle cost.
+10. **Create an RDS Read Replica** in DR, configured as promotable.
+11. **Configure ElastiCache Redis (DR)** and **enable S3 Cross-Region Replication** for continuous data sync.
+12. **Configure Route 53 health checks** against the primary ALB/WAF endpoint with automatic failover routing to the DR ALB.
+13. **Layer in security and operations tooling**: WAF rules, ACM cert, Secrets Manager, KMS, GuardDuty, CloudTrail, Config, AWS Backup, SSM, CloudWatch alarms/dashboards.
+14. **Test failover**: simulate primary region health check failure, confirm Route 53 shifts traffic, confirm RDS replica promotion path, confirm S3 CRR data is current.
 
-## Disaster Recovery Strategy
-| Metric | Target |
-|---|---|
-| RTO | < 15 minutes |
-| RPO | < 5 minutes |
-| Failover trigger | Route 53 health checks |
-| RDS failover | Read replica promotion in Primary in <5 min |
-| Data sync | S3 Cross-Region Replication (continuous) |
+## Lessons Learned
+- **Route 53 health check granularity matters.** Pointing the health check at the ALB alone doesn't catch application-level failures (e.g., a healthy ALB serving 500s from a broken app tier) — the check needs to hit an actual app health endpoint, not just infrastructure.
+- **Warm standby sizing is a real cost/RTO tradeoff.** Setting DR ASG `min:1` keeps idle cost low but adds scale-out time during failover — worth explicitly testing how long it actually takes to reach serving capacity under load, rather than assuming the 15-minute RTO target is met by default.
+- **RDS read replica promotion is not instantaneous** and replication lag can spike under heavy primary write load — the RPO target of <5 min needs to be validated against realistic write throughput, not just idle-state replication lag.
+- **S3 CRR has propagation delay for large objects.** Cross-region replication is asynchronous — don't assume DR region S3 is byte-for-byte current at the moment of failover.
+- **Subnet CIDR planning across regions needs to avoid overlap** if VPC peering or a transit gateway is ever added later — 10.0.0.0/16 (primary) and 10.1.0.0/16 (DR) were chosen specifically to leave room for that.
 
-## Design Rationale
-This pattern is intended for workloads that need aggressive availability targets without the operational cost of full active-active multi-region deployment. The DR region runs a minimally-sized "warm" fleet (ASG min:1) that scales out on failover rather than sitting fully idle (cold standby) or fully scaled (hot/active-active), balancing cost against recovery speed.
-
-## Tech Stack
-`AWS VPC` `Route 53` `CloudFront` `WAF` `ALB` `EC2 / ASG` `RDS MySQL (Multi-AZ)` `ElastiCache Redis` `S3 CRR` `CodePipeline` `CloudTrail` `Config` `GuardDuty` `KMS` `Secrets Manager`
+## Validation Checklist
+- [ ] ALB health checks show all EC2 instances in the ASG as healthy across all 3 AZs
+- [ ] Auto Scaling Group scales out correctly under simulated load (verify via CloudWatch + scaling activity history)
+- [ ] RDS Multi-AZ failover tested (manually reboot with failover) and app tier reconnects without manual intervention
+- [ ] ElastiCache Redis replica promotes correctly on primary node failure
+- [ ] Route 53 health check correctly detects a simulated primary region outage
+- [ ] Traffic fails over to DR region ALB within the RTO target (<15 min), measured end-to-end
+- [ ] RDS read replica in DR promotes successfully and accepts writes post-failover
+- [ ] S3 CRR replica in DR region matches primary bucket contents (spot-check object hashes)
+- [ ] WAF rules block a known OWASP test payload (e.g., simple SQLi/XSS string) at the edge
+- [ ] CloudTrail logs capture all infrastructure changes made during this build
+- [ ] AWS Config shows no non-compliant resources against the defined rule set
+- [ ] GuardDuty shows no unresolved findings post-deployment
