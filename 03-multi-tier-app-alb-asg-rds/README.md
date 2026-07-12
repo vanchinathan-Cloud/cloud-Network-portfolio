@@ -1,6 +1,8 @@
 # 03 — Multi-Tier Application: ALB + ASG + RDS (with Multi-Region DR)
 
-![Architecture Diagram](./three-tier-ha-dr-architecture.png)
+![Architecture Diagram](./architecture-diagram-simple.svg)
+
+Full detailed diagram: [three-tier-ha-dr-architecture.png](./three-tier-ha-dr-architecture.png)
 
 ## Overview
 This module builds a three-tier, highly available web application on AWS with automated multi-region disaster recovery. The goal is to demonstrate a production-realistic pattern — public/private/data subnet separation, Auto Scaling behind an ALB, Multi-AZ RDS, and a warm-standby DR region — rather than a toy single-AZ deployment.
