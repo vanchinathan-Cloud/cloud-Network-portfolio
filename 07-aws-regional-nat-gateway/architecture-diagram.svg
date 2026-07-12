@@ -16,8 +16,21 @@
 
   <!-- Regional NAT Gateway (VPC-wide, not tied to a subnet) -->
   <rect x="300" y="180" width="200" height="70" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
-  <text x="400" y="208" text-anchor="middle" font-size="13" fill="#5C1466" font-weight="bold">Regional NAT Gateway</text>
-  <text x="400" y="228" text-anchor="middle" font-size="11" fill="#5C1466">VPC-scoped, not AZ-bound</text>
+  <text x="400" y="203" text-anchor="middle" font-size="13" fill="#5C1466" font-weight="bold">Regional NAT Gateway</text>
+  <text x="400" y="220" text-anchor="middle" font-size="10" fill="#5C1466">VPC-scoped, not AZ-bound</text>
+  <text x="400" y="235" text-anchor="middle" font-size="9" fill="#5C1466">+ Elastic IP(s) — Auto or Manual mode</text>
+
+  <!-- AWS-managed Route Table -->
+  <rect x="40" y="185" width="180" height="55" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="130" y="205" text-anchor="middle" font-size="10" fill="#8A4B00" font-weight="bold">AWS-managed Route Table</text>
+  <text x="130" y="222" text-anchor="middle" font-size="8" fill="#8A4B00">("Edge Association")</text>
+  <line x1="220" y1="212" x2="298" y2="212" stroke="#FB8C00" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- VPC IPAM Policy -->
+  <rect x="580" y="185" width="180" height="55" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="670" y="205" text-anchor="middle" font-size="10" fill="#8A4B00" font-weight="bold">VPC IPAM Policy</text>
+  <text x="670" y="222" text-anchor="middle" font-size="8" fill="#8A4B00">(optional — controls IP pool)</text>
+  <line x1="580" y1="212" x2="502" y2="212" stroke="#FB8C00" stroke-width="1.2" marker-end="url(#arrow)"/>
 
   <line x1="400" y1="125" x2="400" y2="180" stroke="#888888" stroke-width="1.5" marker-end="url(#arrow)"/>
 

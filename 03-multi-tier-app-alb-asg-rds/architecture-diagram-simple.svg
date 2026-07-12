@@ -1,0 +1,100 @@
+<svg width="900" height="740" viewBox="0 0 900 740" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="900" height="740" fill="#ffffff"/>
+
+  <!-- Edge / Security layer -->
+  <text x="450" y="18" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">Edge &amp; Security</text>
+  <rect x="40"  y="26" width="190" height="50" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
+  <text x="135" y="56" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">Route 53</text>
+  <rect x="250" y="26" width="190" height="50" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
+  <text x="345" y="56" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">AWS WAF</text>
+  <rect x="460" y="26" width="190" height="50" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
+  <text x="555" y="56" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">CloudFront</text>
+  <rect x="670" y="26" width="190" height="50" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
+  <text x="765" y="56" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">ACM</text>
+
+  <!-- Primary region container -->
+  <rect x="40" y="110" width="400" height="470" rx="16" fill="#DCEEFB" stroke="#4A90D9" stroke-width="1"/>
+  <text x="240" y="135" text-anchor="middle" font-size="13" fill="#1F5C99" font-weight="bold">Primary Region — us-east-1</text>
+  <text x="240" y="152" text-anchor="middle" font-size="10" fill="#1F5C99">VPC 10.0.0.0/16 · NAT Gateways ×3</text>
+
+  <rect x="70" y="168" width="340" height="44" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="240" y="195" text-anchor="middle" font-size="12" fill="#1F5C99">Application Load Balancer</text>
+
+  <rect x="70" y="222" width="340" height="56" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="240" y="245" text-anchor="middle" font-size="12" fill="#1F5C99" font-weight="bold">EC2 Auto Scaling Group</text>
+  <text x="240" y="263" text-anchor="middle" font-size="10" fill="#1F5C99">min:2 desired:3 max:10</text>
+
+  <rect x="70" y="288" width="160" height="56" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="150" y="311" text-anchor="middle" font-size="11" fill="#1F5C99" font-weight="bold">RDS MySQL</text>
+  <text x="150" y="328" text-anchor="middle" font-size="10" fill="#1F5C99">Multi-AZ</text>
+
+  <rect x="250" y="288" width="160" height="56" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="330" y="311" text-anchor="middle" font-size="11" fill="#1F5C99" font-weight="bold">ElastiCache</text>
+  <text x="330" y="328" text-anchor="middle" font-size="10" fill="#1F5C99">Redis</text>
+
+  <rect x="70" y="358" width="340" height="44" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="240" y="385" text-anchor="middle" font-size="12" fill="#1F5C99">S3 — Static Assets</text>
+
+  <rect x="70" y="416" width="340" height="44" rx="10" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
+  <text x="240" y="443" text-anchor="middle" font-size="12" fill="#1F5C99">CodePipeline (CI/CD)</text>
+
+  <!-- DR region container -->
+  <rect x="460" y="110" width="400" height="470" rx="16" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
+  <text x="660" y="135" text-anchor="middle" font-size="13" fill="#8A4B00" font-weight="bold">DR Region — us-west-2 (warm standby)</text>
+  <text x="660" y="152" text-anchor="middle" font-size="10" fill="#8A4B00">VPC 10.1.0.0/16</text>
+
+  <rect x="490" y="168" width="340" height="44" rx="10" fill="#ffffff" stroke="#FB8C00" stroke-width="1"/>
+  <text x="660" y="195" text-anchor="middle" font-size="12" fill="#8A4B00">Application Load Balancer</text>
+
+  <rect x="490" y="222" width="340" height="56" rx="10" fill="#ffffff" stroke="#FB8C00" stroke-width="1"/>
+  <text x="660" y="245" text-anchor="middle" font-size="12" fill="#8A4B00" font-weight="bold">EC2 Auto Scaling Group</text>
+  <text x="660" y="263" text-anchor="middle" font-size="10" fill="#8A4B00">min:1 max:6</text>
+
+  <rect x="490" y="288" width="160" height="56" rx="10" fill="#ffffff" stroke="#FB8C00" stroke-width="1"/>
+  <text x="570" y="308" text-anchor="middle" font-size="11" fill="#8A4B00" font-weight="bold">RDS Read Replica</text>
+  <text x="570" y="325" text-anchor="middle" font-size="10" fill="#8A4B00">promotable</text>
+
+  <rect x="670" y="288" width="160" height="56" rx="10" fill="#ffffff" stroke="#FB8C00" stroke-width="1"/>
+  <text x="750" y="311" text-anchor="middle" font-size="11" fill="#8A4B00" font-weight="bold">ElastiCache</text>
+  <text x="750" y="328" text-anchor="middle" font-size="10" fill="#8A4B00">Redis (DR)</text>
+
+  <rect x="490" y="358" width="340" height="44" rx="10" fill="#ffffff" stroke="#FB8C00" stroke-width="1"/>
+  <text x="660" y="385" text-anchor="middle" font-size="12" fill="#8A4B00">S3 — Cross-Region Replica</text>
+
+  <!-- Security & Operations shared band -->
+  <text x="450" y="600" text-anchor="middle" font-size="12" fill="#5C1466" font-weight="bold">Security, Compliance &amp; Operations (shared across regions)</text>
+
+  <rect x="40"  y="612" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="140" y="637" text-anchor="middle" font-size="11" fill="#5C1466">Secrets Manager</text>
+  <rect x="250" y="612" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="350" y="637" text-anchor="middle" font-size="11" fill="#5C1466">KMS</text>
+  <rect x="460" y="612" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="560" y="637" text-anchor="middle" font-size="11" fill="#5C1466">GuardDuty</text>
+  <rect x="670" y="612" width="190" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="765" y="637" text-anchor="middle" font-size="11" fill="#5C1466">CloudTrail</text>
+
+  <rect x="40"  y="660" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="140" y="685" text-anchor="middle" font-size="11" fill="#5C1466">AWS Config</text>
+  <rect x="250" y="660" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="350" y="685" text-anchor="middle" font-size="11" fill="#5C1466">AWS Backup (35-day)</text>
+  <rect x="460" y="660" width="200" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="560" y="685" text-anchor="middle" font-size="11" fill="#5C1466">Systems Manager</text>
+  <rect x="670" y="660" width="190" height="40" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
+  <text x="765" y="685" text-anchor="middle" font-size="11" fill="#5C1466">CloudWatch</text>
+
+  <!-- Arrows: edge to regions -->
+  <line x1="240" y1="76" x2="240" y2="168" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="660" y1="76" x2="660" y2="168" stroke="#FB8C00" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+  <!-- Cross-region replication -->
+  <line x1="410" y1="316" x2="490" y2="316" stroke="#999999" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="450" y="308" text-anchor="middle" font-size="9" fill="#777777">sync</text>
+
+  <text x="450" y="720" text-anchor="middle" font-size="10" fill="#777777">RTO &lt; 15 min · RPO &lt; 5 min · 99.99% availability — dashed lines = failover / replication paths</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+</svg>
