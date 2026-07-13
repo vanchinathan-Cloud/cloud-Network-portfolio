@@ -61,6 +61,7 @@ This is the modern, secure pattern — older tutorials often show "S3 static web
 - Trailing-slash / index document behavior differs from the classic S3 website endpoint — don't assume `/blog/` will auto-resolve to `/blog/index.html` without a CloudFront Function/Lambda@Edge rule.
 - Error pages — configure CloudFront custom error responses (e.g. map S3's 403 on missing object to a custom `404.html` with HTTP 404) since S3 REST origin errors aren't as friendly as the website endpoint's.
 - Don't mix S3 "Static website hosting" mode with OAC — that feature exposes an HTTP-only public endpoint; if it's enabled alongside strict bucket policies, you can end up with a confusing, partially-secured setup.
+- **Once you've completed this lab, delete the resources you created** — the CloudFront distribution (disable it first, then delete once disabled), the S3 bucket and its objects, and the ACM certificate if no longer needed — CloudFront distributions and S3 storage will keep charging your AWS account every month if left running.
 
 ## Validation Checklist
 

@@ -44,6 +44,7 @@ This lab builds a real IPsec Site-to-Site VPN between an AWS VPC and a simulated
 - **The downloaded VPN configuration template needs manual edits for Libreswan**, not a direct copy-paste — an `auth=esp` line in the OpenSwan-vendor template needed to be removed, and the `phase2alg`/`ike` algorithm strings needed to match what AWS actually generated for the tunnel.
 - **Routing through an EC2 instance (rather than a managed gateway) requires an explicit instance-target route** on the private-side route table (`10.0.0.0/16` → the VPN Server's instance ID) — this is a different route table pattern than pointing at an IGW/VGW/NAT Gateway.
 - **The "on-prem" simulation only works one direction without extra routing.** AWS → DC private subnet worked once the AWS route table had the static route; DC → AWS also needed the VPN Server to be explicitly allowed to route (source/dest check) and the DC private route table to know to send AWS-bound traffic through the VPN Server.
+- **Once you've completed this lab, delete the resources you created** — the Site-to-Site VPN Connection, Virtual Private Gateway, Customer Gateway, and all EC2 instances (VPN Server, EC2-A, EC2-B) in both VPCs — otherwise these will keep charging your AWS account every month.
 
 ## Validation Checklist
 
