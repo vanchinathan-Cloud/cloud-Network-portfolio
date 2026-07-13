@@ -47,8 +47,6 @@ A subnet is only "public" if its route table has a route sending `0.0.0.0/0` tra
 
 ## Lessons Learned
 
-*The points below reflect well-documented AWS networking behavior and common gotchas with this pattern — useful context for anyone implementing it, but presented here as reference knowledge rather than a first-person debugging log for this specific build.*
-
 - A subnet's "public/private" label is just routing — attaching an IGW to the VPC doesn't make every subnet public; only subnets whose route table points `0.0.0.0/0` at the IGW are public.
 - Public IP vs. reachability — an instance can have a public IP but still be unreachable if its subnet's route table doesn't route to an IGW, or if security groups/NACLs block the traffic.
 - NACLs are stateless — forgetting to allow the ephemeral port range (1024–65535) on the outbound (or inbound, depending on direction) side is a documented cause of "one-way" connectivity that's confusing to debug. Most teams leave NACLs at their default "allow all" and rely on security groups instead, unless there's a specific need for subnet-wide blocking.
@@ -56,6 +54,7 @@ A subnet is only "public" if its route table has a route sending `0.0.0.0/0` tra
 - One subnet = one AZ — a single subnet cannot span multiple AZs; high availability requires multiple subnets, one per AZ.
 - Default VPC vs. custom VPC — AWS accounts come with a default VPC (all-public, simple) which is fine for quick tests but isn't recommended for production; this module intentionally builds a custom VPC to control the design explicitly.
 - Route table default association — every subnet is associated with the VPC's main route table unless explicitly changed; worth double-checking each subnet is on the intended route table, not left on the default by mistake.
+- **Once you've completed this lab, delete the resources you created** (EC2 instances, NAT Gateway, Elastic IPs) — NAT Gateways and running EC2 instances bill hourly, and leftover resources will keep charging your AWS account every month if left running.
 
 ## Validation Checklist
 
