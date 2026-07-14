@@ -1,72 +1,60 @@
-<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
-  <rect width="800" height="480" fill="#ffffff"/>
+<svg width="900" height="560" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="900" height="560" rx="14" fill="#14161B"/>
+  <text x="450" y="36" text-anchor="middle" font-size="19" font-weight="bold" fill="#F2F2F0">AWS Regional NAT Gateway</text>
+  <text x="450" y="56" text-anchor="middle" font-size="12" fill="#9A9A96">Module 07 — What You're Building</text>
 
-  <!-- Internet -->
-  <rect x="330" y="15" width="140" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
-  <text x="400" y="40" text-anchor="middle" font-size="13" fill="#333333">Internet</text>
-  <line x1="400" y1="55" x2="400" y2="85" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="450" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#D6D6D2">☁ Internet</text>
 
-  <!-- IGW -->
-  <rect x="310" y="85" width="180" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
-  <text x="400" y="110" text-anchor="middle" font-size="12" fill="#333333">Internet Gateway</text>
+  <rect x="40" y="100" width="820" height="420" rx="12" fill="#0F1A14" stroke="#3E9E6F" stroke-width="1.2"/>
+  <text x="60" y="124" font-size="12" font-weight="bold" fill="#5FCB94">▤ VPC — NAT-Test-VPC (10.10.0.0/16)</text>
 
-  <!-- EC2 Instance Connect Endpoint -->
-  <rect x="600" y="80" width="180" height="50" rx="10" fill="#F5F0FA" stroke="#8E24AA" stroke-width="1"/>
-  <text x="690" y="100" text-anchor="middle" font-size="10" fill="#5C1466" font-weight="bold">EC2 Instance Connect</text>
-  <text x="690" y="113" text-anchor="middle" font-size="10" fill="#5C1466" font-weight="bold">Endpoint</text>
-  <text x="690" y="126" text-anchor="middle" font-size="8" fill="#5C1466">SSH to private EC2, no bastion</text>
-  <line x1="690" y1="130" x2="630" y2="280" stroke="#8E24AA" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <rect x="330" y="136" width="240" height="90" rx="10" fill="#241708" stroke="#B0672A" stroke-width="1.3"/>
+  <text x="450" y="158" text-anchor="middle" font-size="12" font-weight="bold" fill="#E2924C">◱ Regional NAT Gateway</text>
+  <text x="450" y="174" text-anchor="middle" font-size="9" fill="#F0A96A">VPC-scoped, not AZ-bound</text>
+  <rect x="346" y="182" width="208" height="20" rx="8" fill="#2A1608" stroke="#B0672A" stroke-width="0.7"/>
+  <text x="450" y="196" text-anchor="middle" font-size="8" fill="#E2924C">◆ Elastic IP (Auto mode)</text>
+  <text x="450" y="216" text-anchor="middle" font-size="8" fill="#C79063">AWS-managed Route Table + VPC IPAM Policy</text>
+  <line x1="450" y1="100" x2="450" y2="136" stroke="#6B6B66" stroke-width="1.4" marker-end="url(#arrow)"/>
 
-  <!-- VPC container -->
-  <rect x="40" y="140" width="720" height="330" rx="16" fill="#FAFAFA" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <text x="58" y="163" font-size="13" fill="#444444" font-weight="bold">VPC — no public subnet required</text>
+  <rect x="60" y="248" width="180" height="70" rx="10" fill="#1A1526" stroke="#7A5CC7" stroke-width="1.2"/>
+  <text x="150" y="270" text-anchor="middle" font-size="10" font-weight="bold" fill="#A98FE0">⧉ EC2 Instance Connect Endpoint</text>
+  <text x="150" y="288" text-anchor="middle" font-size="8" fill="#C6B4EE">SSH to private EC2</text>
+  <text x="150" y="302" text-anchor="middle" font-size="8" fill="#C6B4EE">no bastion, no public IP</text>
 
-  <!-- Regional NAT Gateway (VPC-wide, not tied to a subnet) -->
-  <rect x="300" y="180" width="200" height="70" rx="12" fill="#F3E5F5" stroke="#8E24AA" stroke-width="1.5"/>
-  <text x="400" y="203" text-anchor="middle" font-size="13" fill="#5C1466" font-weight="bold">Regional NAT Gateway</text>
-  <text x="400" y="220" text-anchor="middle" font-size="10" fill="#5C1466">VPC-scoped, not AZ-bound</text>
-  <text x="400" y="235" text-anchor="middle" font-size="9" fill="#5C1466">+ Elastic IP(s) — Auto or Manual mode</text>
+  <text x="230" y="240" text-anchor="middle" font-size="9" fill="#C7C7C2">AZ — a</text>
+  <rect x="330" y="248" width="210" height="150" rx="8" fill="#0E1A24" stroke="#3A6EA5" stroke-width="1"/>
+  <text x="342" y="268" font-size="10" font-weight="bold" fill="#7FB2E8">App Private Subnet — AZ a</text>
+  <rect x="342" y="278" width="186" height="24" rx="8" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.7"/>
+  <text x="435" y="294" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 — app-1</text>
+  <rect x="342" y="308" width="186" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.7"/>
+  <text x="435" y="324" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ 0.0.0.0/0 → NAT GW</text>
+  <text x="435" y="352" text-anchor="middle" font-size="8" fill="#9A9A96">Route table associated</text>
+  <text x="435" y="366" text-anchor="middle" font-size="8" fill="#9A9A96">to this subnet only</text>
 
-  <!-- AWS-managed Route Table -->
-  <rect x="40" y="185" width="180" height="55" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
-  <text x="130" y="205" text-anchor="middle" font-size="10" fill="#8A4B00" font-weight="bold">AWS-managed Route Table</text>
-  <text x="130" y="222" text-anchor="middle" font-size="8" fill="#8A4B00">("Edge Association")</text>
-  <line x1="220" y1="212" x2="298" y2="212" stroke="#FB8C00" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="670" y="240" text-anchor="middle" font-size="9" fill="#C7C7C2">AZ — b</text>
+  <rect x="590" y="248" width="210" height="150" rx="8" fill="#0E1A24" stroke="#3A6EA5" stroke-width="1"/>
+  <text x="602" y="268" font-size="10" font-weight="bold" fill="#7FB2E8">App Private Subnet — AZ b</text>
+  <rect x="602" y="278" width="186" height="24" rx="8" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.7"/>
+  <text x="695" y="294" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 — app-2</text>
+  <rect x="602" y="308" width="186" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.7"/>
+  <text x="695" y="324" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ 0.0.0.0/0 → NAT GW</text>
+  <text x="695" y="352" text-anchor="middle" font-size="8" fill="#9A9A96">Same NAT Gateway serves</text>
+  <text x="695" y="366" text-anchor="middle" font-size="8" fill="#9A9A96">both AZs — no per-AZ setup</text>
 
-  <!-- VPC IPAM Policy -->
-  <rect x="580" y="185" width="180" height="55" rx="10" fill="#FFF3E0" stroke="#FB8C00" stroke-width="1"/>
-  <text x="670" y="205" text-anchor="middle" font-size="10" fill="#8A4B00" font-weight="bold">VPC IPAM Policy</text>
-  <text x="670" y="222" text-anchor="middle" font-size="8" fill="#8A4B00">(optional — controls IP pool)</text>
-  <line x1="580" y1="212" x2="502" y2="212" stroke="#FB8C00" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="240" y1="283" x2="330" y2="283" stroke="#A98FE0" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <line x1="435" y1="226" x2="435" y2="248" stroke="#E2924C" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <line x1="695" y1="226" x2="695" y2="248" stroke="#E2924C" stroke-width="1.3" marker-end="url(#arrow)"/>
 
-  <line x1="400" y1="125" x2="400" y2="180" stroke="#888888" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="450" y="470" text-anchor="middle" font-size="9" fill="#847E96">No public subnet required — private-only design, tested end to end via Instance Connect</text>
 
-  <!-- Private subnets AZ-a/b/c -->
-  <rect x="70" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="170" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-a</text>
-  <rect x="100" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="170" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
-
-  <rect x="300" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="400" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-b</text>
-  <rect x="330" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="400" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
-
-  <rect x="530" y="280" width="200" height="160" rx="12" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="630" y="305" text-anchor="middle" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet — AZ-c</text>
-  <rect x="560" y="330" width="140" height="40" rx="8" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="630" y="355" text-anchor="middle" font-size="11" fill="#3E6E2A">EC2</text>
-
-  <!-- Single route from each subnet to the one Regional NAT GW -->
-  <line x1="170" y1="330" x2="360" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <line x1="400" y1="330" x2="400" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <line x1="630" y1="330" x2="440" y2="250" stroke="#6FAE4B" stroke-width="1.2" marker-end="url(#arrow)"/>
-
-  <text x="400" y="465" text-anchor="middle" font-size="10" fill="#777777">Same route (0.0.0.0/0 → Regional NAT GW) works across all AZs — auto-expands as new AZs are used</text>
+  <circle cx="130" cy="524" r="5" fill="#B0672A"/><text x="142" y="528" font-size="9" fill="#C7C7C2">NAT / gateway</text>
+  <circle cx="290" cy="524" r="5" fill="#7A5CC7"/><text x="302" y="528" font-size="9" fill="#C7C7C2">Private access</text>
+  <circle cx="440" cy="524" r="5" fill="#3A6EA5"/><text x="452" y="528" font-size="9" fill="#C7C7C2">Compute</text>
+  <circle cx="560" cy="524" r="5" fill="#847E96"/><text x="572" y="528" font-size="9" fill="#C7C7C2">Routing</text>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9A9A96"/>
     </marker>
   </defs>
 </svg>

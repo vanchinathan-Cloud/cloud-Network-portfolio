@@ -1,63 +1,84 @@
-<svg width="800" height="560" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
-  <rect width="800" height="560" fill="#ffffff"/>
+<svg width="900" height="680" viewBox="0 0 900 680" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="900" height="680" rx="14" fill="#14161B"/>
+  <text x="450" y="36" text-anchor="middle" font-size="19" font-weight="bold" fill="#F2F2F0">VPC Networking Basics</text>
+  <text x="450" y="56" text-anchor="middle" font-size="12" fill="#9A9A96">Module 01 — What You're Building</text>
 
-  <rect x="330" y="15" width="140" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
-  <text x="400" y="40" text-anchor="middle" font-size="13" fill="#333333">Internet</text>
-  <line x1="400" y1="55" x2="400" y2="85" stroke="#666666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="450" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#D6D6D2">☁ Internet</text>
+  <line x1="450" y1="88" x2="450" y2="110" stroke="#6B6B66" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <rect x="310" y="85" width="180" height="40" rx="8" fill="#ECECEC" stroke="#888888" stroke-width="1"/>
-  <text x="400" y="110" text-anchor="middle" font-size="12" fill="#333333">Internet Gateway</text>
+  <rect x="330" y="110" width="240" height="30" rx="8" fill="#241708" stroke="#B0672A" stroke-width="1"/>
+  <text x="450" y="130" text-anchor="middle" font-size="11" fill="#E2924C">↑ Internet Gateway (IGW)</text>
 
-  <rect x="40" y="140" width="720" height="400" rx="16" fill="#FAFAFA" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <text x="58" y="163" font-size="13" fill="#444444" font-weight="bold">VPC — 10.0.0.0/16 (2 AZs for redundancy)</text>
+  <rect x="40" y="152" width="820" height="480" rx="12" fill="#0F1A14" stroke="#3E9E6F" stroke-width="1.2"/>
+  <text x="60" y="176" font-size="12" font-weight="bold" fill="#5FCB94">▤ VPC — 10.0.0.0/16 (CIDR Block)</text>
 
-  <line x1="400" y1="125" x2="400" y2="180" stroke="#888888" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="188" width="780" height="26" rx="6" fill="#1A1526" stroke="#7A5CC7" stroke-width="0.8"/>
+  <text x="450" y="206" text-anchor="middle" font-size="10" fill="#A98FE0">Network ACL (NACL) — stateless, subnet-level, default: allow all</text>
 
-  <rect x="70" y="180" width="320" height="330" rx="14" fill="#F5F5F5" stroke="#999999" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="85" y="202" font-size="12" fill="#555555" font-weight="bold">Availability Zone A</text>
+  <text x="240" y="232" text-anchor="middle" font-size="10" fill="#C7C7C2">Availability Zone A</text>
+  <rect x="70" y="240" width="340" height="370" rx="8" fill="none" stroke="#4A4A46" stroke-width="1" stroke-dasharray="3,3"/>
 
-  <rect x="90" y="215" width="280" height="115" rx="10" fill="#DCEEFB" stroke="#4A90D9" stroke-width="1"/>
-  <text x="105" y="235" font-size="12" fill="#1F5C99" font-weight="bold">Public Subnet 10.0.0.0/24</text>
-  <rect x="110" y="250" width="130" height="36" rx="7" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
-  <text x="175" y="266" text-anchor="middle" font-size="11" fill="#1F5C99">NAT Gateway</text>
-  <text x="175" y="280" text-anchor="middle" font-size="8" fill="#1F5C99">+ Elastic IP</text>
-  <rect x="250" y="250" width="100" height="36" rx="7" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
-  <text x="300" y="272" text-anchor="middle" font-size="10" fill="#1F5C99">Test EC2</text>
-  <text x="105" y="315" font-size="10" fill="#1F5C99">rt-public-a: 0.0.0.0/0 → IGW</text>
+  <rect x="90" y="256" width="300" height="120" rx="8" fill="#0E1A24" stroke="#3A6EA5" stroke-width="1"/>
+  <text x="102" y="274" font-size="10" font-weight="bold" fill="#7FB2E8">Public Subnet — 10.0.0.0/24</text>
+  <rect x="102" y="282" width="140" height="20" rx="10" fill="#241708" stroke="#B0672A" stroke-width="0.8"/>
+  <text x="172" y="296" text-anchor="middle" font-size="9" fill="#E2924C">⇅ NAT Gateway</text>
+  <rect x="248" y="282" width="130" height="20" rx="10" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="313" y="296" text-anchor="middle" font-size="9" fill="#E2B04E">◆ Elastic IP</text>
+  <rect x="102" y="308" width="130" height="20" rx="10" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
+  <text x="167" y="322" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 (public IP)</text>
+  <rect x="240" y="308" width="138" height="20" rx="10" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="309" y="322" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Route Table → IGW</text>
+  <rect x="102" y="334" width="276" height="30" rx="8" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="240" y="353" text-anchor="middle" font-size="9" fill="#E2B04E">⛨ Security Group — allow SSH from your IP only</text>
 
-  <line x1="175" y1="286" x2="175" y2="345" stroke="#6FAE4B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="90" y="400" width="300" height="150" rx="8" fill="#181A22" stroke="#7FB2E8" stroke-width="1" opacity="0.9"/>
+  <text x="102" y="418" font-size="10" font-weight="bold" fill="#7FB2E8">Private Subnet — 10.0.10.0/24</text>
+  <rect x="102" y="426" width="130" height="20" rx="10" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
+  <text x="167" y="440" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 (no public IP)</text>
+  <rect x="240" y="426" width="138" height="20" rx="10" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="309" y="440" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Route Table → NAT GW</text>
+  <rect x="102" y="452" width="276" height="30" rx="8" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="240" y="471" text-anchor="middle" font-size="9" fill="#E2B04E">⛨ Security Group — no inbound from internet</text>
+  <text x="240" y="512" text-anchor="middle" font-size="9" fill="#847E96">Outbound-only internet via NAT Gateway</text>
 
-  <rect x="90" y="345" width="280" height="140" rx="10" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="105" y="365" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet 10.0.10.0/24</text>
-  <rect x="110" y="380" width="130" height="36" rx="7" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="175" y="402" text-anchor="middle" font-size="10" fill="#3E6E2A">EC2 (no public IP)</text>
-  <text x="105" y="440" font-size="10" fill="#3E6E2A">rt-private-a: 0.0.0.0/0 → NAT GW</text>
-  <text x="105" y="460" font-size="9" fill="#3E6E2A">SG: no inbound from internet</text>
+  <text x="640" y="232" text-anchor="middle" font-size="10" fill="#C7C7C2">Availability Zone B</text>
+  <rect x="470" y="240" width="340" height="370" rx="8" fill="none" stroke="#4A4A46" stroke-width="1" stroke-dasharray="3,3"/>
 
-  <rect x="410" y="180" width="320" height="330" rx="14" fill="#F5F5F5" stroke="#999999" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="425" y="202" font-size="12" fill="#555555" font-weight="bold">Availability Zone B</text>
+  <rect x="490" y="256" width="300" height="120" rx="8" fill="#0E1A24" stroke="#3A6EA5" stroke-width="1"/>
+  <text x="502" y="274" font-size="10" font-weight="bold" fill="#7FB2E8">Public Subnet — 10.0.1.0/24</text>
+  <rect x="502" y="282" width="140" height="20" rx="10" fill="#241708" stroke="#B0672A" stroke-width="0.8"/>
+  <text x="572" y="296" text-anchor="middle" font-size="9" fill="#E2924C">⇅ NAT Gateway</text>
+  <rect x="648" y="282" width="130" height="20" rx="10" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="713" y="296" text-anchor="middle" font-size="9" fill="#E2B04E">◆ Elastic IP</text>
+  <rect x="502" y="308" width="130" height="20" rx="10" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
+  <text x="567" y="322" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 (public IP)</text>
+  <rect x="640" y="308" width="138" height="20" rx="10" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="709" y="322" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Route Table → IGW</text>
+  <rect x="502" y="334" width="276" height="30" rx="8" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="640" y="353" text-anchor="middle" font-size="9" fill="#E2B04E">⛨ Security Group — allow SSH from your IP only</text>
 
-  <rect x="430" y="215" width="280" height="115" rx="10" fill="#DCEEFB" stroke="#4A90D9" stroke-width="1"/>
-  <text x="445" y="235" font-size="12" fill="#1F5C99" font-weight="bold">Public Subnet 10.0.1.0/24</text>
-  <rect x="450" y="250" width="130" height="36" rx="7" fill="#ffffff" stroke="#4A90D9" stroke-width="1"/>
-  <text x="515" y="266" text-anchor="middle" font-size="11" fill="#1F5C99">NAT Gateway</text>
-  <text x="515" y="280" text-anchor="middle" font-size="8" fill="#1F5C99">+ Elastic IP</text>
-  <text x="445" y="315" font-size="10" fill="#1F5C99">rt-public-b: 0.0.0.0/0 → IGW</text>
+  <rect x="490" y="400" width="300" height="150" rx="8" fill="#181A22" stroke="#7FB2E8" stroke-width="1" opacity="0.9"/>
+  <text x="502" y="418" font-size="10" font-weight="bold" fill="#7FB2E8">Private Subnet — 10.0.11.0/24</text>
+  <rect x="502" y="426" width="130" height="20" rx="10" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
+  <text x="567" y="440" text-anchor="middle" font-size="9" fill="#7FB2E8">▥ EC2 (no public IP)</text>
+  <rect x="640" y="426" width="138" height="20" rx="10" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="709" y="440" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Route Table → NAT GW</text>
+  <rect x="502" y="452" width="276" height="30" rx="8" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="640" y="471" text-anchor="middle" font-size="9" fill="#E2B04E">⛨ Security Group — no inbound from internet</text>
+  <text x="640" y="512" text-anchor="middle" font-size="9" fill="#847E96">Outbound-only internet via NAT Gateway</text>
 
-  <line x1="515" y1="286" x2="515" y2="345" stroke="#6FAE4B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="450" y1="140" x2="240" y2="256" stroke="#6B6B66" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <line x1="450" y1="140" x2="640" y2="256" stroke="#6B6B66" stroke-width="1.3" marker-end="url(#arrow)"/>
 
-  <rect x="430" y="345" width="280" height="140" rx="10" fill="#E3F3DC" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="445" y="365" font-size="12" fill="#3E6E2A" font-weight="bold">Private Subnet 10.0.11.0/24</text>
-  <rect x="450" y="380" width="130" height="36" rx="7" fill="#ffffff" stroke="#6FAE4B" stroke-width="1"/>
-  <text x="515" y="402" text-anchor="middle" font-size="10" fill="#3E6E2A">EC2 (no public IP)</text>
-  <text x="445" y="440" font-size="10" fill="#3E6E2A">rt-private-b: 0.0.0.0/0 → NAT GW</text>
-  <text x="445" y="460" font-size="9" fill="#3E6E2A">SG: no inbound from internet</text>
-
-  <text x="58" y="555" font-size="9" fill="#777777">NACL (subnet-level, stateless — default allow-all) sits in front of every subnet shown above</text>
+  <circle cx="70" cy="648" r="5" fill="#3A6EA5"/><text x="82" y="652" font-size="9" fill="#C7C7C2">Compute / networking</text>
+  <circle cx="260" cy="648" r="5" fill="#B0672A"/><text x="272" y="652" font-size="9" fill="#C7C7C2">Gateway / storage</text>
+  <circle cx="420" cy="648" r="5" fill="#B98A2E"/><text x="432" y="652" font-size="9" fill="#C7C7C2">Security / IP</text>
+  <circle cx="560" cy="648" r="5" fill="#7A5CC7"/><text x="572" y="652" font-size="9" fill="#C7C7C2">Access control</text>
+  <circle cx="710" cy="648" r="5" fill="#847E96"/><text x="722" y="652" font-size="9" fill="#C7C7C2">Routing</text>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9A9A96"/>
     </marker>
   </defs>
 </svg>
