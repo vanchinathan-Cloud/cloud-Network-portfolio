@@ -20,7 +20,7 @@
   <rect x="200" y="270" width="200" height="26" rx="8" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
   <text x="300" y="287" text-anchor="middle" font-size="9" fill="#7FB2E8">⧉ Origin Access Control (OAC)</text>
   <rect x="412" y="270" width="208" height="26" rx="8" fill="#0E2C4A" stroke="#3A6EA5" stroke-width="0.8"/>
-  <text x="516" y="287" text-anchor="middle" font-size="9" fill="#7FB2E8">⚡ CloudFront Function (index redirects)</text>
+  <text x="516" y="287" text-anchor="middle" font-size="9" fill="#7FB2E8">⚡ CloudFront Function (redirects)</text>
   <text x="410" y="316" text-anchor="middle" font-size="9" fill="#9BB9D6">Signs requests to S3 — only CloudFront can fetch objects</text>
 
   <line x1="410" y1="340" x2="410" y2="362" stroke="#6B6B66" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -29,7 +29,7 @@
   <text x="220" y="386" font-size="12" font-weight="bold" fill="#E2924C">▤ S3 Bucket (private)</text>
   <text x="220" y="404" font-size="10" fill="#F0A96A">Block Public Access = ON (all four settings)</text>
   <rect x="220" y="414" width="380" height="30" rx="8" fill="#2A1608" stroke="#B0672A" stroke-width="0.8"/>
-  <text x="410" y="433" text-anchor="middle" font-size="9" fill="#E2924C">Bucket Policy — s3:GetObject allowed only from this CloudFront distribution</text>
+  <text x="410" y="433" text-anchor="middle" font-size="9" fill="#E2924C">Bucket Policy — scoped to this CloudFront distribution only</text>
   <text x="410" y="466" text-anchor="middle" font-size="9" fill="#C79063">Direct bucket URL access → 403 Access Denied</text>
 
   <line x1="140" y1="280" x2="180" y2="280" stroke="#B32F2F" stroke-width="2"/>

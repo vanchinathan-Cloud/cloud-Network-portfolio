@@ -17,7 +17,7 @@
   <line x1="450" y1="100" x2="450" y2="136" stroke="#6B6B66" stroke-width="1.4" marker-end="url(#arrow)"/>
 
   <rect x="60" y="248" width="180" height="70" rx="10" fill="#1A1526" stroke="#7A5CC7" stroke-width="1.2"/>
-  <text x="150" y="270" text-anchor="middle" font-size="10" font-weight="bold" fill="#A98FE0">⧉ EC2 Instance Connect Endpoint</text>
+  <text x="150" y="270" text-anchor="middle" font-size="10" font-weight="bold" fill="#A98FE0">⧉ EC2 Instance Connect</text>
   <text x="150" y="288" text-anchor="middle" font-size="8" fill="#C6B4EE">SSH to private EC2</text>
   <text x="150" y="302" text-anchor="middle" font-size="8" fill="#C6B4EE">no bastion, no public IP</text>
 

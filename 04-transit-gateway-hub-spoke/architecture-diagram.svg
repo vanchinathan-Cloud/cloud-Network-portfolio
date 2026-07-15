@@ -9,8 +9,8 @@
   <text x="450" y="284" text-anchor="middle" font-size="9" fill="#C6B4EE">Regional hub — routes between attachments</text>
   <rect x="350" y="292" width="200" height="24" rx="8" fill="#241534" stroke="#7A5CC7" stroke-width="0.8"/>
   <text x="450" y="308" text-anchor="middle" font-size="9" fill="#A98FE0">☰ TGW Route Table</text>
-  <text x="450" y="330" text-anchor="middle" font-size="8" fill="#847E96">Association: routes THIS attachment's traffic</text>
-  <text x="450" y="342" text-anchor="middle" font-size="8" fill="#847E96">Propagation: learns routes FROM an attachment</text>
+  <text x="450" y="330" text-anchor="middle" font-size="8" fill="#847E96">Association: THIS attachment's traffic</text>
+  <text x="450" y="342" text-anchor="middle" font-size="8" fill="#847E96">Propagation: routes FROM an attachment</text>
 
   <!-- Spoke A -->
   <rect x="40" y="60" width="240" height="130" rx="10" fill="#0F1A14" stroke="#3E9E6F" stroke-width="1.2"/>
