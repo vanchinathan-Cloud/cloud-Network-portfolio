@@ -1,25 +1,36 @@
 # Module 15: Branch to AWS via SD-WAN (Basic Hybrid)
 
 ```
- Branch1         Branch2
-   |               |
- [cEdge]         [cEdge]
-    \             /
-     \           /
-      ---- Internet ----
-              |
-        IPSec Tunnel
-              |
-     -------------------
-     |                 |
-     |   Transit GW    |
-     |                 |
-     -------------------
-              |
-          [VPC]
-              |
-     App / Load Balancer
+   Branch1                        Branch2
+ 10.10.11.0/24                  10.10.12.0/24
+      |                              |
+   [cEdge]                       [cEdge]
+      \                              /
+       \                            /
+        \--------- Internet -------/
+                      |
+             IPSec Tunnels (x2)
+             BGP peering per tunnel
+                      |
+        -----------------------------
+        |      Transit Gateway       |
+        |   vpn-rt  <-->  vpc-rt     |
+        -----------------------------
+                      |
+                  VPC-attach
+                      |
+        -----------------------------
+        |        Target VPC         |
+        |       10.20.0.0/16        |
+        |                           |
+        |   [ALB] -> App/Web tier   |
+        -----------------------------
 ```
+
+*Diagram style aligned to the Transit VPC / Transit Gateway reference
+architecture — branch/site CIDRs, route-table names (`vpn-rt`, `vpc-rt`),
+and explicit BGP-per-tunnel peering called out, consistent with how the
+CGW/TGW Connect variant is documented in Module 16.*
 
 ## Overview
 
