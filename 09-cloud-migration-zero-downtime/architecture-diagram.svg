@@ -1,0 +1,72 @@
+<svg width="960" height="640" viewBox="0 0 960 640" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="960" height="640" rx="14" fill="#14161B"/>
+  <text x="480" y="36" text-anchor="middle" font-size="19" font-weight="bold" fill="#F2F2F0">Zero-Downtime Cloud Migration &amp; Modernization</text>
+  <text x="480" y="56" text-anchor="middle" font-size="12" fill="#9A9A96">Module 09 — What You're Building</text>
+
+  <!-- Legacy Data Center -->
+  <rect x="40" y="90" width="280" height="180" rx="10" fill="#241708" stroke="#E2924C" stroke-width="1.2"/>
+  <text x="60" y="116" font-size="13" font-weight="bold" fill="#F0A96A">▤ Legacy Data Center</text>
+  <text x="60" y="134" font-size="9" fill="#E2B04E">On-premises</text>
+  <rect x="60" y="144" width="240" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="180" y="160" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ App servers</text>
+  <rect x="60" y="176" width="240" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="180" y="192" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Legacy database</text>
+  <rect x="60" y="216" width="240" height="24" rx="8" fill="#2A2312" stroke="#B98A2E" stroke-width="0.8"/>
+  <text x="180" y="232" text-anchor="middle" font-size="9" fill="#F0CC7E">◎ Legacy ALB (weighted down over time)</text>
+
+  <!-- Hybrid Bridge -->
+  <rect x="360" y="130" width="240" height="100" rx="12" fill="#1A1526" stroke="#7A5CC7" stroke-width="1.4"/>
+  <text x="480" y="156" text-anchor="middle" font-size="13" font-weight="bold" fill="#A98FE0">◈ Hybrid Bridge</text>
+  <text x="480" y="174" text-anchor="middle" font-size="9" fill="#C6B4EE">Site-to-Site VPN / Direct Connect</text>
+  <rect x="380" y="184" width="200" height="24" rx="8" fill="#241534" stroke="#7A5CC7" stroke-width="0.8"/>
+  <text x="480" y="200" text-anchor="middle" font-size="9" fill="#A98FE0">☰ Legacy ↔ AWS reachability</text>
+
+  <!-- AWS VPC -->
+  <rect x="640" y="90" width="280" height="180" rx="10" fill="#0F1A14" stroke="#3E9E6F" stroke-width="1.2"/>
+  <text x="660" y="116" font-size="13" font-weight="bold" fill="#5FCB94">▤ AWS VPC — Target Environment</text>
+  <text x="660" y="134" font-size="9" fill="#9BCBAA">Continuously replicated</text>
+  <rect x="660" y="144" width="240" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="780" y="160" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ Migrated app (AWS MGN)</text>
+  <rect x="660" y="176" width="240" height="24" rx="8" fill="#181A22" stroke="#847E96" stroke-width="0.8"/>
+  <text x="780" y="192" text-anchor="middle" font-size="9" fill="#C7C7C2">☰ RDS target (AWS DMS / CDC)</text>
+  <rect x="660" y="216" width="240" height="24" rx="8" fill="#122A1C" stroke="#3E9E6F" stroke-width="0.8"/>
+  <text x="780" y="232" text-anchor="middle" font-size="9" fill="#9BCBAA">◎ AWS ALB (weighted up over time)</text>
+
+  <!-- Arrows bridge to each side -->
+  <line x1="320" y1="180" x2="360" y2="180" stroke="#7A5CC7" stroke-width="1.6" marker-end="url(#arrowPurple)"/>
+  <line x1="600" y1="180" x2="640" y2="180" stroke="#7A5CC7" stroke-width="1.6" marker-end="url(#arrowPurple)"/>
+
+  <defs>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L8 5L1 9" fill="none" stroke="#7A5CC7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L8 5L1 9" fill="none" stroke="#E2B04E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Route53 weighted routing -->
+  <rect x="280" y="340" width="400" height="90" rx="12" fill="#241534" stroke="#B0672A" stroke-width="1.2"/>
+  <text x="480" y="366" text-anchor="middle" font-size="13" font-weight="bold" fill="#F0A96A">☍ Route53 — Weighted Routing</text>
+  <text x="480" y="384" text-anchor="middle" font-size="9" fill="#E2B04E">Wave 1: 5% → Wave 2: 25% → Wave 3: 50% → Wave 4: 100%</text>
+  <text x="480" y="402" text-anchor="middle" font-size="9" fill="#9A9A96">Each increase gated by health checks + bake period</text>
+
+  <line x1="180" y1="270" x2="330" y2="340" stroke="#E2924C" stroke-width="1.6" marker-end="url(#arrowAmber)"/>
+  <line x1="780" y1="270" x2="630" y2="340" stroke="#3E9E6F" stroke-width="1.6" marker-end="url(#arrowAmber)"/>
+
+  <!-- End users -->
+  <rect x="380" y="470" width="200" height="56" rx="10" fill="#181A22" stroke="#7FB2E8" stroke-width="1.2"/>
+  <text x="480" y="496" text-anchor="middle" font-size="12" font-weight="bold" fill="#7FB2E8">◉ End Users</text>
+  <text x="480" y="514" text-anchor="middle" font-size="9" fill="#9A9A96">Resolve via Route53 weight</text>
+  <line x1="480" y1="430" x2="480" y2="470" stroke="#7FB2E8" stroke-width="1.6" marker-end="url(#arrowPurple)"/>
+
+  <!-- Legend -->
+  <circle cx="60" cy="580" r="6" fill="#E2924C"/>
+  <text x="74" y="584" font-size="10" fill="#9A9A96">Legacy — being phased out</text>
+  <circle cx="300" cy="580" r="6" fill="#7A5CC7"/>
+  <text x="314" y="584" font-size="10" fill="#9A9A96">Hybrid bridge — temporary</text>
+  <circle cx="540" cy="580" r="6" fill="#3E9E6F"/>
+  <text x="554" y="584" font-size="10" fill="#9A9A96">AWS target — being ramped up</text>
+  <circle cx="800" cy="580" r="6" fill="#7FB2E8"/>
+  <text x="814" y="584" font-size="10" fill="#9A9A96">Traffic path</text>
+</svg>
