@@ -18,17 +18,18 @@ A hands-on AWS networking portfolio covering core VPC concepts through hybrid an
 | 06 | [Hybrid Network — Direct Connect](./06-hybrid-network-direct-connect) | Dedicated fiber connectivity, Direct Connect Gateway, DX vs. VPN tradeoffs |
 | 07 | [AWS Regional NAT Gateway](./07-aws-regional-nat-gateway) | Newer VPC-wide NAT pattern (2025+), Regional vs. Zonal NAT comparison |
 | 08 | [Secure Hybrid Network Architecture (Capstone)](./08-secure-hybrid-network-capstone) | Integrated reference architecture combining TGW, VPN, Direct Connect, and defense-in-depth security from modules 01–07 |
+| 09 | [Zero Trust Internal API](./09-zero-trust-internal-api) | Serverless API (API Gateway + Lambda + DynamoDB) enforcing AWS_IAM authorization and SigV4-signed requests — no implicit trust based on network location |
 
 ## Planned / Upcoming Modules
 
 | # | Module | Status |
 |---|--------|--------|
-| 09 | AWS Network Firewall | Planned |
-| 10 | Gateway Load Balancer | Planned |
-| 11 | CloudFront + Global Accelerator | Planned |
-| 12 | Route 53 Failover Routing | Planned |
-| 13 | VPC Endpoints (Private Access) | Planned |
-| 14 | AWS Organizations & Multi-Account Landing Zone | Planned |
+| 10 | AWS Network Firewall | Planned |
+| 11 | Gateway Load Balancer | Planned |
+| 12 | CloudFront + Global Accelerator | Planned |
+| 13 | Route 53 Failover Routing | Planned |
+| 14 | VPC Endpoints (Private Access) | Planned |
+| 15 | AWS Organizations & Multi-Account Landing Zone | Planned |
 
 > **Note:** "VPC Peering — Cross Region" and "Highly Available NAT Gateway" from the original roadmap were superseded — VPC Peering concepts are covered within the Transit Gateway module, and NAT HA is now covered by the Regional NAT Gateway module (07), which replaces the older per-AZ pattern. "Multi-Region Disaster Recovery" was also removed from this list since it's already delivered in full by Module 03. Module 08 was assembled from a standalone capstone folder that predated the numbered module structure.
 
