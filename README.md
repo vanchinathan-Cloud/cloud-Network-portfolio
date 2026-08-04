@@ -51,8 +51,12 @@ VPC · Subnets · Route Tables · IGW · NAT Gateway · Security Groups · NACLs
 Transit Gateway · Site-to-Site VPN · Direct Connect (design) · ALB · Auto Scaling ·
 RDS · CloudFront · VPC Endpoints · CloudWatch
 
-## About
+## About Me
 
-Built and maintained by [Vanchinathan](https://github.com/vanchinathan-Cloud) as a
-hands-on record of AWS network engineering work — not a portfolio of screenshots,
-but of things actually deployed and validated.
+**Vanchinathan** — Senior Network & Cloud Architect
+
+- 🔗 [LinkedIn](https://www.linkedin.com/in/vanchinathan-p/)
+- 📧 [Vanchi.sit@gmail.com](mailto:Vanchi.sit@gmail.com)
+
+This portfolio is a hands-on record of AWS network engineering work — not a
+portfolio of screenshots, but of things actually deployed and validated.
