@@ -1,56 +1,58 @@
-# Cloud Network Portfolio
+# Enterprise AWS Cloud Network Infrastructure
 
-A hands-on AWS networking portfolio covering core VPC concepts through hybrid and advanced connectivity patterns. Each module includes an overview, build steps, a validation checklist, and lessons learned from actually building it.
+Hands-on labs and reference builds for designing, deploying, securing, and validating
+production-grade AWS network infrastructure — VPC architecture, hybrid connectivity,
+segmentation, monitoring, and security controls.
 
-**Skills demonstrated:** VPC Design · Subnetting & Routing · S3 + CloudFront (OAC) · ALB / Auto Scaling / RDS · Transit Gateway · Site-to-Site VPN · Direct Connect · Regional NAT Gateway
+This isn't a collection of diagrams. Every module here was actually built and torn
+down in an AWS account, with the real build steps, gotchas, and validation checks
+documented as I went.
 
----
+## What this portfolio demonstrates
 
-## Completed Modules
+- **Business framing** — each build starts from a real-world scenario (multi-tier app,
+  hybrid on-prem connectivity, zero-trust internal API), not a services checklist.
+- **Security posture** — least-privilege security groups, NACLs, segmented VPCs, and
+  zero-trust patterns applied throughout, not bolted on as an afterthought.
+- **High availability** — multi-AZ design decisions and their trade-offs, called out
+  explicitly in each module rather than assumed.
+- **Cost awareness** — NAT Gateway vs. NAT instance, VPC endpoints vs. NAT traffic,
+  Direct Connect vs. VPN — the cost reasoning behind design choices, not just "it works."
+- **Real troubleshooting** — actual errors hit while building, and how they were
+  diagnosed and fixed, kept in each module's Lessons Learned section.
 
-| # | Module | Topic |
+## Modules
+
+| # | Module | Focus |
 |---|--------|-------|
-| 01 | [VPC Networking Basics](./01-vpc-networking-basics) | CIDR planning, subnets, route tables, IGW/NAT fundamentals |
-| 02 | [Secure S3 Static Website](./02-secure-s3-static-website) | S3 + CloudFront + Origin Access Control, HTTPS, private bucket pattern |
-| 03 | [Multi-Tier App (ALB + ASG + RDS)](./03-multi-tier-app-alb-asg-rds) | Three-tier architecture, Auto Scaling, Multi-AZ RDS, multi-region DR |
-| 04 | [Transit Gateway Hub-and-Spoke](./04-transit-gateway-hub-spoke) | Centralized routing across multiple VPCs, route table segmentation |
-| 05 | [Site-to-Site VPN Lab](./05-site-to-site-vpn-lab) | IPsec VPN, Customer/Virtual Private Gateway, static vs. BGP routing |
-| 06 | [Hybrid Network — Direct Connect](./06-hybrid-network-direct-connect) | Dedicated fiber connectivity, Direct Connect Gateway, DX vs. VPN tradeoffs |
-| 07 | [AWS Regional NAT Gateway](./07-aws-regional-nat-gateway) | Newer VPC-wide NAT pattern (2025+), Regional vs. Zonal NAT comparison |
-| 08 | [Secure Hybrid Network Architecture (Capstone)](./08-secure-hybrid-network-capstone) | Integrated reference architecture combining TGW, VPN, Direct Connect, and defense-in-depth security from modules 01–07 |
-| 09 | [Zero Trust Internal API](./09-zero-trust-internal-api) | Serverless API (API Gateway + Lambda + DynamoDB) enforcing AWS_IAM authorization and SigV4-signed requests — no implicit trust based on network location |
+| 01 | [VPC Networking Basics](./01-vpc-networking-basics) | CIDR planning, subnets, route tables, IGW |
+| 02 | [Secure S3 Static Website](./02-secure-s3-static-website) | S3 + CloudFront security basics |
+| 03 | [Multi-Tier App (ALB, ASG, RDS)](./03-multi-tier-app-alb-asg-rds) | Public/private tier separation, load balancing |
+| 04 | [Transit Gateway Hub-and-Spoke](./04-transit-gateway-hub-spoke) | Centralized routing across multiple VPCs |
+| 05 | [Site-to-Site VPN Lab](./05-site-to-site-vpn-lab) | On-prem to AWS VPN connectivity |
+| 06 | [Hybrid Network — Direct Connect](./06-hybrid-network-direct-connect) | Direct Connect architecture and design |
+| 07 | [Regional NAT Gateway](./07-aws-regional-nat-gateway) | Outbound internet access for private subnets |
+| 08 | [Secure Hybrid Network Capstone](./08-secure-hybrid-network-capstone) | Combined hybrid + security patterns |
+| 09 | [Zero Trust Internal API](./09-zero-trust-internal-api) | Zero-trust access to an internal service |
 
-## Planned / Upcoming Modules
+## How each module is documented
 
-| # | Module | Status |
-|---|--------|--------|
-| 10 | AWS Network Firewall | Planned |
-| 11 | Gateway Load Balancer | Planned |
-| 12 | CloudFront + Global Accelerator | Planned |
-| 13 | Route 53 Failover Routing | Planned |
-| 14 | VPC Endpoints (Private Access) | Planned |
-| 15 | AWS Organizations & Multi-Account Landing Zone | Planned |
+Every module folder follows the same five-section format:
 
-> **Note:** "VPC Peering — Cross Region" and "Highly Available NAT Gateway" from the original roadmap were superseded — VPC Peering concepts are covered within the Transit Gateway module, and NAT HA is now covered by the Regional NAT Gateway module (07), which replaces the older per-AZ pattern. "Multi-Region Disaster Recovery" was also removed from this list since it's already delivered in full by Module 03. Module 08 was assembled from a standalone capstone folder that predated the numbered module structure.
+1. **Overview** — what's being built and why
+2. **Core Components** — the AWS services/resources involved
+3. **Build Steps** — the order of operations to reproduce it
+4. **Lessons Learned** — real gotchas and debugging notes from building it
+5. **Validation Checklist** — how to confirm it actually works
 
----
+## Tech / Services Covered
 
-## How Each Module Is Structured
+VPC · Subnets · Route Tables · IGW · NAT Gateway · Security Groups · NACLs ·
+Transit Gateway · Site-to-Site VPN · Direct Connect (design) · ALB · Auto Scaling ·
+RDS · CloudFront · VPC Endpoints · CloudWatch
 
-Every module folder follows the same format:
-- **Overview** — what's being built and why
-- **Core Components** — the AWS services/resources involved
-- **Build Steps** — the order of operations to reproduce it
-- **Lessons Learned** — real gotchas and debugging notes from building it
-- **Validation Checklist** — how to confirm it actually works
+## About
 
-## About This Portfolio
-
-Built to demonstrate practical, hands-on AWS networking skills — from foundational VPC design through advanced hybrid connectivity — with an emphasis on documenting *why* each pattern is used, not just the console clicks to build it.
-
-## About Me
-
-**Vanchinathan** — Senior Network & Cloud Architect
-
-- 🔗 [LinkedIn](https://www.linkedin.com/in/vanchinathan-p/)
-- 📧 [Vanchi.sit@gmail.com](mailto:Vanchi.sit@gmail.com)
+Built and maintained by [Vanchinathan](https://github.com/vanchinathan-Cloud) as a
+hands-on record of AWS network engineering work — not a portfolio of screenshots,
+but of things actually deployed and validated.
